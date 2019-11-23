@@ -33,15 +33,14 @@ plugins:
   - jekyll-feed
 
 markdown: kramdown
-highlighter: none
+highlighter: rouge
 kramdown:
   # math_engine: sskatex
   # math_engine_opts:
   #   katex_js: 'asserts/css/katex.min.js'
   input: GFM
   auto_ids: true
-  syntax_highlighter_opts:
-    disable: true
+
 
 # Exclude from processing.
 # The following items will not be processed, by default.
