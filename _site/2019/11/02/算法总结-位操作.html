@@ -39,213 +39,213 @@
   <div class="post-content e-content" itemprop="articleBody">
     <p>位操作是计算机底层使用二进制运算时实际使用的操作，主要包括以下几种</p>
 <ul>
-  <li><code>|</code> 按位或</li>
-  <li><code>&amp;</code> 按位与</li>
-  <li><code>^</code> 异或</li>
-  <li><code>~</code> 取反</li>
-  <li><code>&gt;&gt;</code> 右移</li>
-  <li><code>&lt;&lt;</code> 左移</li>
-  <li>有些语言还有 <code>&gt;&gt;&gt;</code> 逻辑右移</li>
+  <li><code class="language-plaintext highlighter-rouge">|</code> 按位或</li>
+  <li><code class="language-plaintext highlighter-rouge">&amp;</code> 按位与</li>
+  <li><code class="language-plaintext highlighter-rouge">^</code> 异或</li>
+  <li><code class="language-plaintext highlighter-rouge">~</code> 取反</li>
+  <li><code class="language-plaintext highlighter-rouge">&gt;&gt;</code> 右移</li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;&lt;</code> 左移</li>
+  <li>有些语言还有 <code class="language-plaintext highlighter-rouge">&gt;&gt;&gt;</code> 逻辑右移</li>
 </ul>
 
 <h3 id="位运算的一些骚操作">位运算的一些“骚”操作</h3>
 <p>位操作与数值在计算机中的表示方式息息相关，整数使用补码表示，正整数补码与原码相同，负数等于绝对值的原码取反+1，上面数位操作是计算机中底层使用的操作，如加法，使用循环计数加法器，对应LeetCode 371.不使用加减运算符实现两个数相加。</p>
-<pre><code class="language-python">class Solution_371:
-    def getSum(self, a, b):
-        # Bit manipulation
-        # 使用二进制循环进位加法器的原理
-        mask = 0xffffffff
-        res = 0
-        c = 0
-        for i in range(32):
-            ai = ((a &amp; mask) &gt;&gt; i) &amp; 1
-            bi = ((b &amp; mask) &gt;&gt; i) &amp; 1
-            s = (ai ^ bi ^ c)
-            c = (ai &amp; bi) | (ai &amp; c) | (bi &amp; c)
-            res |= (s &lt;&lt; i)
-        # 为了处理python不会溢出的问题
-        bins = bin(res &amp; mask)[2:].zfill(32)
-        return int(bins[1:], 2) - int(bins[0]) * (1 &lt;&lt; 31)
-</code></pre>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_371</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">getSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="c1"># Bit manipulation
+</span>        <span class="c1"># 使用二进制循环进位加法器的原理
+</span>        <span class="n">mask</span> <span class="o">=</span> <span class="mh">0xffffffff</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
+            <span class="n">ai</span> <span class="o">=</span> <span class="p">((</span><span class="n">a</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span>
+            <span class="n">bi</span> <span class="o">=</span> <span class="p">((</span><span class="n">b</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">i</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">ai</span> <span class="o">^</span> <span class="n">bi</span> <span class="o">^</span> <span class="n">c</span><span class="p">)</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">ai</span> <span class="o">&amp;</span> <span class="n">bi</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">ai</span> <span class="o">&amp;</span> <span class="n">c</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">bi</span> <span class="o">&amp;</span> <span class="n">c</span><span class="p">)</span>
+            <span class="n">res</span> <span class="o">|=</span> <span class="p">(</span><span class="n">s</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span>
+        <span class="c1"># 为了处理python不会溢出的问题
+</span>        <span class="n">bins</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">res</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">bins</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">bins</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">31</span><span class="p">)</span>
+</code></pre></div></div>
 <p>算法中使用位操作可以有更快的运算速度，合理运用位操作还能获得神奇的解法。下面来看一看位运算中有那些”骚操作”。</p>
 
-<p>1.<code>x &amp; 1</code> 取最低有效位的值，可以通过是否为1来判断x的奇偶性,例如快速幂：</p>
-<pre><code class="language-python">def big_pow(a, b):
-    # 快速求a的b次幂
-    r = big_pow(a, b//2)
-    if b &amp; 1: # b为奇数
-        return r*r*a
-    else:  #b为偶数
-        return r*r
-</code></pre>
-<p>2.<code>x &amp; (x-1)</code> 将x最低的一位1置零，例如</p>
-<pre><code class="language-python">x = 0b1100
-x-1 = 0b1011
-x &amp; (x - 1) = 0b1000
-</code></pre>
+<p>1.<code class="language-plaintext highlighter-rouge">x &amp; 1</code> 取最低有效位的值，可以通过是否为1来判断x的奇偶性,例如快速幂：</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">big_pow</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="c1"># 快速求a的b次幂
+</span>    <span class="n">r</span> <span class="o">=</span> <span class="n">big_pow</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># b为奇数
+</span>        <span class="k">return</span> <span class="n">r</span><span class="o">*</span><span class="n">r</span><span class="o">*</span><span class="n">a</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1">#b为偶数
+</span>        <span class="k">return</span> <span class="n">r</span><span class="o">*</span><span class="n">r</span>
+</code></pre></div></div>
+<p>2.<code class="language-plaintext highlighter-rouge">x &amp; (x-1)</code> 将x最低的一位1置零，例如</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="mb">0b1100</span>
+<span class="n">x</span><span class="o">-</span><span class="mi">1</span> <span class="o">=</span> <span class="mb">0b1011</span>
+<span class="n">x</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mb">0b1000</span>
+</code></pre></div></div>
 <p>这个在实际中可以用来判断x是否是2的幂，也可用来数x的二进制表表示中1的个数。</p>
-<pre><code class="language-python">def is_pow_of_2(x):
-    cnt = 0
-    while x:
-        x &amp;= (x-1)
-        cnt += 1     # cnt是x的二进制表表示中1的个数
-    return cnt == 1  # 二进制表示中只有一位1就是2的幂了（正整数）
-</code></pre>
-<p>3.对<code>x&amp;(x-1)</code>结合异或操作的话，就可以得到<code>x ^ (x &amp; (x-1))</code>，返回x最右边一位1对应位为1其余位为0的数。同样也可以使用<code>x &amp; (-x)</code>或者是<code>x&amp;(~(x-1))</code>来实现这个。</p>
-<pre><code class="language-python">x = 0b00001000
-x-1 = 0b00000111
-~(x-1) = 0b11111000 # ~(x-1)再加一的话表示 -(x-1), 因此~(x-1) = -x
-x &amp; (x-1) = 0b00000000
--x = 0b11111000 # 负数的补码表示 x取反加一
-
-x &amp; (-x) = 0b00001000
-x &amp; (~(x-1)) = 0b00001000
-x ^(x &amp; (x-1)) = 0b00001000
-# 上述语句实现这样的功能
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">is_pow_of_2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>     <span class="c1"># cnt是x的二进制表表示中1的个数
+</span>    <span class="k">return</span> <span class="n">cnt</span> <span class="o">==</span> <span class="mi">1</span>  <span class="c1"># 二进制表示中只有一位1就是2的幂了（正整数）
+</span></code></pre></div></div>
+<p>3.对<code class="language-plaintext highlighter-rouge">x&amp;(x-1)</code>结合异或操作的话，就可以得到<code class="language-plaintext highlighter-rouge">x ^ (x &amp; (x-1))</code>，返回x最右边一位1对应位为1其余位为0的数。同样也可以使用<code class="language-plaintext highlighter-rouge">x &amp; (-x)</code>或者是<code class="language-plaintext highlighter-rouge">x&amp;(~(x-1))</code>来实现这个。</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="mb">0b00001000</span>
+<span class="n">x</span><span class="o">-</span><span class="mi">1</span> <span class="o">=</span> <span class="mb">0b00000111</span>
+<span class="o">~</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mb">0b11111000</span> <span class="c1"># ~(x-1)再加一的话表示 -(x-1), 因此~(x-1) = -x
+</span><span class="n">x</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="mb">0b00000000</span>
+<span class="o">-</span><span class="n">x</span> <span class="o">=</span> <span class="mb">0b11111000</span> <span class="c1"># 负数的补码表示 x取反加一
+</span>
+<span class="n">x</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span> <span class="o">=</span> <span class="mb">0b00001000</span>
+<span class="n">x</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">=</span> <span class="mb">0b00001000</span>
+<span class="n">x</span> <span class="o">^</span><span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">=</span> <span class="mb">0b00001000</span>
+<span class="c1"># 上述语句实现这样的功能
 # mask = 1
 # for i in range(32):
 #     if r &amp; mask == mask:
 #         break
 #     mask&lt;&lt;=1
 # 获得mask
-</code></pre>
-<p>4.<code>x ^ x = 0</code> 这是一个特别有用的性质，比如可以用来实现swap。</p>
-<pre><code class="language-c++">void swap(int &amp;a, int &amp;b){
-    a ^= b;
-    b ^= a;
-    a ^= b;
-}
-</code></pre>
+</span></code></pre></div></div>
+<p>4.<code class="language-plaintext highlighter-rouge">x ^ x = 0</code> 这是一个特别有用的性质，比如可以用来实现swap。</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">swap</span><span class="p">(</span><span class="kt">int</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">){</span>
+    <span class="n">a</span> <span class="o">^=</span> <span class="n">b</span><span class="p">;</span>
+    <span class="n">b</span> <span class="o">^=</span> <span class="n">a</span><span class="p">;</span>
+    <span class="n">a</span> <span class="o">^=</span> <span class="n">b</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
 <p>再比如LeetCode 136.找一个数组中唯一一个出现一次的数，其余数出现两次。</p>
-<pre><code class="language-python">class Solution_136:
-    def singleNumber(self, nums: List[int]) -&gt; int:
-        r = 0
-        for x in nums:
-            r ^= x
-        return r
-</code></pre>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_136</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">^=</span> <span class="n">x</span>
+        <span class="k">return</span> <span class="n">r</span>
+</code></pre></div></div>
 <p>5.C++之类的语言中，可以使用(x ^ (x»31)) - (x»31) 来对32位int值x取绝对值（python整数不会溢出，所以不能这么干）。</p>
 <pre><code class="language-C++">int abs(int a){
     (x ^ (x&gt;&gt;31)) - (x&gt;&gt;31);
 }
 </code></pre>
 <p>6.因为python整数不会溢出，所以处理负数位操作会有点麻烦，可以这样转换。</p>
-<pre><code class="language-python">def to_int32(x):
-    mask = 0xffffffff
-    bins = bin(x &amp; mask)[2:].zfill(32)
-    return int(bins[1:], 2) - int(bins[0]) * (1 &lt;&lt; 31)
-</code></pre>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">to_int32</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="mh">0xffffffff</span>
+    <span class="n">bins</span> <span class="o">=</span> <span class="nb">bin</span><span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">bins</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">bins</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">31</span><span class="p">)</span>
+</code></pre></div></div>
 <h3 id="一些题目实例">一些题目实例</h3>
 <p>接下来记一些在实际题目中灵活应用的操作。
 前面LeetCode 371.的例子还有一种不太直观的解法，分两种情况来处理</p>
 <ul>
-  <li>a,b对应位都是<code>1</code>，则该位上会产生一个进位，使用<code>a &amp; b</code>产生进位，并左移一位（向做进位）。</li>
-  <li>a,b对应位不都为<code>1</code>，该位上不产生进位，使用<code>a ^ b</code>获取这一部分的结果。
-    <pre><code class="language-python">class Solution_371:
-def iterative_getSum(self, a: int, b: int) -&gt; int:
-    # 迭代形式
-    if a == 0 or b == 0:
-        return a | b
-    mask = 0xffffffff
-    while b &amp; mask:
-        c = (a &amp; b) &lt;&lt; 1 # 进位
-        a = a ^ b   # 把部分"加"的结果存进a
-        b = c       # 把进位赋值给b 进入下一轮迭代
-    return a &amp; mask if b &gt; mask else a
+  <li>a,b对应位都是<code class="language-plaintext highlighter-rouge">1</code>，则该位上会产生一个进位，使用<code class="language-plaintext highlighter-rouge">a &amp; b</code>产生进位，并左移一位（向做进位）。</li>
+  <li>a,b对应位不都为<code class="language-plaintext highlighter-rouge">1</code>，该位上不产生进位，使用<code class="language-plaintext highlighter-rouge">a ^ b</code>获取这一部分的结果。
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_371</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">iterative_getSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="c1"># 迭代形式
+</span>    <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">|</span> <span class="n">b</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="mh">0xffffffff</span>
+    <span class="k">while</span> <span class="n">b</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span> <span class="c1"># 进位
+</span>        <span class="n">a</span> <span class="o">=</span> <span class="n">a</span> <span class="o">^</span> <span class="n">b</span>   <span class="c1"># 把部分"加"的结果存进a
+</span>        <span class="n">b</span> <span class="o">=</span> <span class="n">c</span>       <span class="c1"># 把进位赋值给b 进入下一轮迭代
+</span>    <span class="k">return</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="n">mask</span> <span class="k">if</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="n">mask</span> <span class="k">else</span> <span class="n">a</span>
 
-def recursive_getSum(self, a: int, b: int) -&gt; int:
-    # 递归形式
-    return a if b==0 else recursive_get_sum(a^b, (a&amp;b)&lt;&lt;1)
-</code></pre>
-    <p>LeetCode 137. 一个数组中，只有一个数出现一次，其余数出现三次，找出这个数。最简单的办法是用额外的空间存一下都有那些数，对其求和，和的三倍减去数组元素和除以2就是要找的数字，这样时间复杂度和空间复杂度都是<code>O(n)</code>，代码如下解法1。</p>
+<span class="k">def</span> <span class="nf">recursive_getSum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="c1"># 递归形式
+</span>    <span class="k">return</span> <span class="n">a</span> <span class="k">if</span> <span class="n">b</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="n">recursive_get_sum</span><span class="p">(</span><span class="n">a</span><span class="o">^</span><span class="n">b</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="o">&amp;</span><span class="n">b</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>    </div>
+    <p>LeetCode 137. 一个数组中，只有一个数出现一次，其余数出现三次，找出这个数。最简单的办法是用额外的空间存一下都有那些数，对其求和，和的三倍减去数组元素和除以2就是要找的数字，这样时间复杂度和空间复杂度都是<code class="language-plaintext highlighter-rouge">O(n)</code>，代码如下解法1。</p>
   </li>
 </ul>
 
-<p>更好的解法是统计32位数上每一位上1出现的次数，如果是3的倍数，则结果的该位为<code>0</code>，否则为<code>1</code>，代码如解法2。</p>
+<p>更好的解法是统计32位数上每一位上1出现的次数，如果是3的倍数，则结果的该位为<code class="language-plaintext highlighter-rouge">0</code>，否则为<code class="language-plaintext highlighter-rouge">1</code>，代码如解法2。</p>
 
-<p>一个更好的思路是沿续解法2的思路，模3的值只有<code>0b00</code>,<code>0b01</code>,<code>0b10</code>三种，因此可以使用两个状态来表示当前位<code>1</code>的总数%3，对应表示某个数x是第一出现还是第二次出现，没出现是状态位为<code>(0, 0)</code>, 第一次出现状态为更新为<code>(0, 1)</code>，第二次出现状态为更新为<code>(1, 0)</code>,再次出现则重置为<code>(0, 0)</code>，这样对于任何一个出现三次的数，两个状态量都必定为0，最终只出现一次的状态量中保存的就是结果值。</p>
-<pre><code class="language-python">class Solution_137:
-    def singleNumber(self, nums: List[int]) -&gt; int:
-        # 解法1
-        # using extra space for set
-        return (3 * (sum(set(nums))) - sum(nums)) // 2
+<p>一个更好的思路是沿续解法2的思路，模3的值只有<code class="language-plaintext highlighter-rouge">0b00</code>,<code class="language-plaintext highlighter-rouge">0b01</code>,<code class="language-plaintext highlighter-rouge">0b10</code>三种，因此可以使用两个状态来表示当前位<code class="language-plaintext highlighter-rouge">1</code>的总数%3，对应表示某个数x是第一出现还是第二次出现，没出现是状态位为<code class="language-plaintext highlighter-rouge">(0, 0)</code>, 第一次出现状态为更新为<code class="language-plaintext highlighter-rouge">(0, 1)</code>，第二次出现状态为更新为<code class="language-plaintext highlighter-rouge">(1, 0)</code>,再次出现则重置为<code class="language-plaintext highlighter-rouge">(0, 0)</code>，这样对于任何一个出现三次的数，两个状态量都必定为0，最终只出现一次的状态量中保存的就是结果值。</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_137</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="c1"># 解法1
+</span>        <span class="c1"># using extra space for set
+</span>        <span class="k">return</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">nums</span><span class="p">)))</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">))</span> <span class="o">//</span> <span class="mi">2</span>
     
-    def singleNumber(self, nums: List[int]) -&gt; int:
-        # 解法2
-        # 对于每一位如果 1 出现的总次数是3的倍数，则该位为0，否则该位为1
-        res = 0
-        for i in range(32):
-            v = 1 &lt;&lt; i
-            s = sum([x &amp; v != 0 for x in nums])
-            if s % 3 != 0:
-                res |= v
-        if res &gt; (1 &lt;&lt; 31) - 1:
-            return (res &amp; 0x7fffffff) - (1 &lt;&lt; 31)  # python负数
-        return res
+    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="c1"># 解法2
+</span>        <span class="c1"># 对于每一位如果 1 出现的总次数是3的倍数，则该位为0，否则该位为1
+</span>        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">x</span> <span class="o">&amp;</span> <span class="n">v</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">|=</span> <span class="n">v</span>
+        <span class="k">if</span> <span class="n">res</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">31</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">res</span> <span class="o">&amp;</span> <span class="mh">0x7fffffff</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">31</span><span class="p">)</span>  <span class="c1"># python负数
+</span>        <span class="k">return</span> <span class="n">res</span>
 
-    def singleNumber(self, nums):
-        # 解法3
-        # 状态记作(b, a)，这样对每一位有 真值表如下：
-        #   b   a   x  |   b'  a'
-        #   0   0   0  |   0   0
-        #   0   0   1  |   0   1
-        #   0   1   0  |   0   1
-        #   0   1   1  |   1   0
-        #   1   0   0  |   1   0
-        #   1   0   1  |   0   0
-        # 状态转移为(0, 0) -&gt; (0, 1) -&gt; (1, 0) -&gt; (0, 0)的循环
-        # 使用卡诺图化简上述真值表，得到表达式为：
-        # a' &lt;-- (~b) &amp; (a ^ x)     (1)
-        # b  &lt;-- (~b)ac | b(~a)(~c) (2)
-        # 如果将第一步a已经赋值考虑进去，第二步可以改写为
-        # b &lt;-- (~a') &amp; (b ^ x)
-        # 代码如下
-        sone = stwo = 0
-        for x in nums:
-            sone = (sone ^ x) &amp; ~stwo
-            stwo = (stwo ^ x) &amp; ~sone
-        return sone
-</code></pre>
+    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+        <span class="c1"># 解法3
+</span>        <span class="c1"># 状态记作(b, a)，这样对每一位有 真值表如下：
+</span>        <span class="c1">#   b   a   x  |   b'  a'
+</span>        <span class="c1">#   0   0   0  |   0   0
+</span>        <span class="c1">#   0   0   1  |   0   1
+</span>        <span class="c1">#   0   1   0  |   0   1
+</span>        <span class="c1">#   0   1   1  |   1   0
+</span>        <span class="c1">#   1   0   0  |   1   0
+</span>        <span class="c1">#   1   0   1  |   0   0
+</span>        <span class="c1"># 状态转移为(0, 0) -&gt; (0, 1) -&gt; (1, 0) -&gt; (0, 0)的循环
+</span>        <span class="c1"># 使用卡诺图化简上述真值表，得到表达式为：
+</span>        <span class="c1"># a' &lt;-- (~b) &amp; (a ^ x)     (1)
+</span>        <span class="c1"># b  &lt;-- (~b)ac | b(~a)(~c) (2)
+</span>        <span class="c1"># 如果将第一步a已经赋值考虑进去，第二步可以改写为
+</span>        <span class="c1"># b &lt;-- (~a') &amp; (b ^ x)
+</span>        <span class="c1"># 代码如下
+</span>        <span class="n">sone</span> <span class="o">=</span> <span class="n">stwo</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+            <span class="n">sone</span> <span class="o">=</span> <span class="p">(</span><span class="n">sone</span> <span class="o">^</span> <span class="n">x</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">stwo</span>
+            <span class="n">stwo</span> <span class="o">=</span> <span class="p">(</span><span class="n">stwo</span> <span class="o">^</span> <span class="n">x</span><span class="p">)</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">sone</span>
+        <span class="k">return</span> <span class="n">sone</span>
+</code></pre></div></div>
 
-<p>对于题目LeetCode 260.一个数组中有两个数只出现出现一次，其余数出现两次，找出那两个只出现一次的数。这题与LeetCode 136.的区别是只出现一次的数多了一个，假设只出现一次的数为a和b，直接对数组元素进行异或操作只能得到<code>a^b</code>的值，需要一些额外的操作将a和b区分开，注意到<code>a^b</code>为1的位一定是a和b对应位不同才得到的，因此我们可以使用这一不同将a和b区分开。</p>
-<pre><code class="language-python">class Solution_260:
-    def singleNumber(self, nums: List[int]) -&gt; List[int]:
-        r = 0
-        for n in nums:
-            r ^= n
-        # 上述循环结束后 r = a^b (a, b是要找的两个只出现一次的数)，
-        # 其最低位的1一定是由于a,b对应位置不同才出现的 0^1 = 1^0 = 1,
-        # 于是通过判断nums中数的这一位为0还是为1可以将nums分为两组，
-        # 一组是包含a,和其他出现两次的数；另一组是包含b和剩下出现两次的数。
-        # 这样分别对两组数异或，就可以求出a, b了
-        mask = r &amp; (-r) # 或 mask = r &amp; ~(r-1) 或 mask = r ^ (r &amp; (r -1))
+<p>对于题目LeetCode 260.一个数组中有两个数只出现出现一次，其余数出现两次，找出那两个只出现一次的数。这题与LeetCode 136.的区别是只出现一次的数多了一个，假设只出现一次的数为a和b，直接对数组元素进行异或操作只能得到<code class="language-plaintext highlighter-rouge">a^b</code>的值，需要一些额外的操作将a和b区分开，注意到<code class="language-plaintext highlighter-rouge">a^b</code>为1的位一定是a和b对应位不同才得到的，因此我们可以使用这一不同将a和b区分开。</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_260</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">singleNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">^=</span> <span class="n">n</span>
+        <span class="c1"># 上述循环结束后 r = a^b (a, b是要找的两个只出现一次的数)，
+</span>        <span class="c1"># 其最低位的1一定是由于a,b对应位置不同才出现的 0^1 = 1^0 = 1,
+</span>        <span class="c1"># 于是通过判断nums中数的这一位为0还是为1可以将nums分为两组，
+</span>        <span class="c1"># 一组是包含a,和其他出现两次的数；另一组是包含b和剩下出现两次的数。
+</span>        <span class="c1"># 这样分别对两组数异或，就可以求出a, b了
+</span>        <span class="n">mask</span> <span class="o">=</span> <span class="n">r</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">-</span><span class="n">r</span><span class="p">)</span> <span class="c1"># 或 mask = r &amp; ~(r-1) 或 mask = r ^ (r &amp; (r -1))
+</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">:</span>
+                <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^=</span> <span class="n">n</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^=</span> <span class="n">n</span>
 
-        res = [0, 0]
-        for n in nums:
-            if n &amp; mask:
-                res[0] ^= n
-            else:
-                res[1] ^= n
-
-        return res
+        <span class="k">return</span> <span class="n">res</span>
     
-</code></pre>
+</code></pre></div></div>
 
-<p>可以用位来表示集合，<code>1</code>表示对应元素存在集合中，<code>0</code>表示不存在。对LeetCode 78. 生成所有子集问题，可以通过回溯的方法生成，也可直接枚举，注意子集的数目是$2^n$, n是集合元素数目，可以通过n位的数字，对应位是否为1表示对应元素是否在子集中。</p>
-<pre><code class="language-python">class Solution_78:
-    def subsets(self, nums):
-        # 使用位操作来生成所有子集（注意溢出问题）
-        # 对应位i为 1 表示取nums[i]这个元素，否则不取
-        t = 1 &lt;&lt; len(nums)
-        res = []
-        for i in range(t):
-            tmp = []
-            for j in range(len(nums)):
-                if i &amp; (1 &lt;&lt; j):
-                    tmp.append(nums[j])
-            res.append(tmp)
-        return res
-</code></pre>
+<p>可以用位来表示集合，<code class="language-plaintext highlighter-rouge">1</code>表示对应元素存在集合中，<code class="language-plaintext highlighter-rouge">0</code>表示不存在。对LeetCode 78. 生成所有子集问题，可以通过回溯的方法生成，也可直接枚举，注意子集的数目是$2^n$, n是集合元素数目，可以通过n位的数字，对应位是否为1表示对应元素是否在子集中。</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_78</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">subsets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">):</span>
+        <span class="c1"># 使用位操作来生成所有子集（注意溢出问题）
+</span>        <span class="c1"># 对应位i为 1 表示取nums[i]这个元素，否则不取
+</span>        <span class="n">t</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">j</span><span class="p">):</span>
+                    <span class="n">tmp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nums</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+</code></pre></div></div>
 <p>同样的经典的8皇后问题也是一个使用回溯可以解的问题，使用位操作可以更优雅的解决这个问题。8皇后问题中，我们一行一行地放置皇后，对于一行中的每个位置，可能遇到3种冲突而不能放置。</p>
 <ul>
   <li>列冲突， 这一列已经放置过皇后</li>
@@ -253,36 +253,36 @@ def recursive_getSum(self, a: int, b: int) -&gt; int:
   <li>左上对角线冲突，当前位置向左上的对角线位置上已经放过皇后</li>
 </ul>
 
-<p>我们可以用三个八位二进制数来表示三种冲突，分别记为A，B，C。有了一行的状态量之后我们可以很容易地通过<code>D=~(A|B|C)</code>来判断出那些位置是可行的，而状态的更新则分别对应置位和左右移位。</p>
-<pre><code class="language-c++">class Solution_EightQueens{
-    int cnt;
-    int helper(unsigned char A, unsigned char B, unsigned char C){
-        if (A ^ 0xff == 0){ //A全为1，放完了所有皇后
-            cnt += 1; 
-            return;
-        }
-        unsigned char D = ~(A|B|C); //可行位置
-        while (D){
-            unsigned char mask = D &amp; (-D);
-            D ^= mask;
-            helper(A|mask, (B|mask)&gt;&gt;1, (C|mask)&lt;&lt;1);
-        }
-    }
-public:
-    int EightQueens(){
-        cnt = 0;
-        helper(0, 0, 0);
-        return cnt;
-    }
-};
-</code></pre>
+<p>我们可以用三个八位二进制数来表示三种冲突，分别记为A，B，C。有了一行的状态量之后我们可以很容易地通过<code class="language-plaintext highlighter-rouge">D=~(A|B|C)</code>来判断出那些位置是可行的，而状态的更新则分别对应置位和左右移位。</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_EightQueens</span><span class="p">{</span>
+    <span class="kt">int</span> <span class="n">cnt</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">helper</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">A</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">B</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">C</span><span class="p">){</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">A</span> <span class="o">^</span> <span class="mh">0xff</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span> <span class="c1">//A全为1，放完了所有皇后</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span> 
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">D</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span><span class="n">A</span><span class="o">|</span><span class="n">B</span><span class="o">|</span><span class="n">C</span><span class="p">);</span> <span class="c1">//可行位置</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">D</span><span class="p">){</span>
+            <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">mask</span> <span class="o">=</span> <span class="n">D</span> <span class="o">&amp;</span> <span class="p">(</span><span class="o">-</span><span class="n">D</span><span class="p">);</span>
+            <span class="n">D</span> <span class="o">^=</span> <span class="n">mask</span><span class="p">;</span>
+            <span class="n">helper</span><span class="p">(</span><span class="n">A</span><span class="o">|</span><span class="n">mask</span><span class="p">,</span> <span class="p">(</span><span class="n">B</span><span class="o">|</span><span class="n">mask</span><span class="p">)</span><span class="o">&gt;&gt;</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">C</span><span class="o">|</span><span class="n">mask</span><span class="p">)</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="nl">public:</span>
+    <span class="kt">int</span> <span class="n">EightQueens</span><span class="p">(){</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="n">helper</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">cnt</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
 
 <p>另外位操作还有很多应用，比如加解密，错误检测和恢复，数据压缩等，之前看到的一道Google的面试题：十个人排成一列，每人头上有一定帽子，帽子颜色位红色或者黑色。后面的人能看到前面所有人帽子的颜色，但看不到后面的和自己的。要他们每个人都开口报一个颜色，问用什么策略可以保证说出的颜色恰好是自己头上帽子的颜色的人数最多。比如一个简单策略，10号报9号帽子的颜色，9跟着10号报，8号报7号帽子的颜色，7号跟着8号报，依次类推，这样可以保证至少有5个人说对。</p>
 
-<p>对于帽子的颜色只有两种，显然是用二进制表示，<code>0</code>表示黑色，<code>1</code>表示红色。然后使用策略就是奇偶校验，最后一个人当作校验位，假设使用奇校验。例子：假设第十位看到从第一位到第9位的帽子颜色为：<code>101001110</code>。则根据奇校验规则，第十位报的颜色为：</p>
-<pre><code class="language-python">1^0^1^0^0^1^1^1^0^[1] = 0 # [1]是奇校验规则，保证1个数位奇数个
-</code></pre>
-<p>第9个人根据自己看到的前8个人和校验位报的颜色，可以准确算出自己的颜色。前面<code>1</code>个数为奇数个，校验位报的为<code>0</code>,因此自己这一位为<code>0</code>。然后8号根据校验位和九号位报的算出自己的颜色，依次类推。
+<p>对于帽子的颜色只有两种，显然是用二进制表示，<code class="language-plaintext highlighter-rouge">0</code>表示黑色，<code class="language-plaintext highlighter-rouge">1</code>表示红色。然后使用策略就是奇偶校验，最后一个人当作校验位，假设使用奇校验。例子：假设第十位看到从第一位到第9位的帽子颜色为：<code class="language-plaintext highlighter-rouge">101001110</code>。则根据奇校验规则，第十位报的颜色为：</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">1</span><span class="o">^</span><span class="mi">0</span><span class="o">^</span><span class="mi">1</span><span class="o">^</span><span class="mi">0</span><span class="o">^</span><span class="mi">0</span><span class="o">^</span><span class="mi">1</span><span class="o">^</span><span class="mi">1</span><span class="o">^</span><span class="mi">1</span><span class="o">^</span><span class="mi">0</span><span class="o">^</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># [1]是奇校验规则，保证1个数位奇数个
+</span></code></pre></div></div>
+<p>第9个人根据自己看到的前8个人和校验位报的颜色，可以准确算出自己的颜色。前面<code class="language-plaintext highlighter-rouge">1</code>个数为奇数个，校验位报的为<code class="language-plaintext highlighter-rouge">0</code>,因此自己这一位为<code class="language-plaintext highlighter-rouge">0</code>。然后8号根据校验位和九号位报的算出自己的颜色，依次类推。
 使用这样的策略最终能够保证至少报对9个，校验位帽子的颜色和校验数值一致的话可以报对十个。</p>
 
 <p>另外之前在Google kick start Round G中也遇到了的一道位操作的题目，题目大意是：</p>
@@ -297,48 +297,48 @@ $(A_1 xor k) + (A_2 xor k) + … + (A_N xor k) \le M$  (1)
 
 <p>刚看到这题的想法是枚举，对于小数据集，k的最大值是127，因为Ai和M的最大值为100，如果k&gt;=128,则Ai xor k &gt;= 128 &gt; M，因此k的最大值是127，所以可以枚举，但是对于大数据集。因为k&lt;2**50，不可能在有限时间内枚举，时间复杂度太高了，需要优化。</p>
 
-<p>注意到，k的每一位影响A中每个元素的对应位（回忆xor的作用），可以利用这一性质分别计算k的每一位。使用数组<code>ones[i]</code>表示数组A中第i位取值为1的元素个数，。对应的<code>zeros[i]</code>表示数组中第i位值为0的元素个数，i的取值范围<code>[0, 50)</code>。这样前面不等式(1)的左半部分可以变成：
+<p>注意到，k的每一位影响A中每个元素的对应位（回忆xor的作用），可以利用这一性质分别计算k的每一位。使用数组<code class="language-plaintext highlighter-rouge">ones[i]</code>表示数组A中第i位取值为1的元素个数，。对应的<code class="language-plaintext highlighter-rouge">zeros[i]</code>表示数组中第i位值为0的元素个数，i的取值范围<code class="language-plaintext highlighter-rouge">[0, 50)</code>。这样前面不等式(1)的左半部分可以变成：
 <script type="math/tex">\sum_{j=1}^{N}(A_j xor k) = \sum_{i:k的第i为1} 2^i * zeros[i] + \sum_{i:k的第i位为0} 2^i * ones[i]</script>
 有了上面的表示，我们可以通过如下设置来使上述总和变小。</p>
-<pre><code class="language-python">if ones[i] &gt;= zeros[i]:
-    k的第i位 := 1
-else:
-    k的第i位 := 0
-</code></pre>
-<p>定义f[j] 表示对所有i属于<code>[0,j]</code>内上述和的最小值（即上述和只算到第j位），那么如果有 f[50] &gt; M 的话，显然k不存在，返回-1。
-接下来可以从高位到第位开始，分别考察每一位，如果把这一位设为1的话，是否满足(1),如果满足则可以设为1，否则置0。最后得到的就是结果。这里总和的计算可以用截止到当前位的部分和<code>sums</code>和当前为置<code>1</code>的和<code>zeros[i](* (1&lt;&lt;i))</code>已经右边部分最小值<code>f[i-1]</code>。</p>
-<pre><code class="language-python">class Solution:
-    @staticmethod
-    def solve(N, M, A):
-        ones = [0] * BITS
-        zeros = [0] * BITS
-        for x in A:
-            for shift in range(BITS):
-                # 这里为了方便直接乘上了 2 ** shift。
-                ones[shift] += ((x &gt;&gt; shift) &amp; 1) * (1 &lt;&lt; shift)
-                zeros[shift] += (1 - (x &gt;&gt; shift) &amp; 1) * (1 &lt;&lt; shift)
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">ones</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">zeros</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+    <span class="n">k</span><span class="err">的第</span><span class="n">i</span><span class="err">位</span> <span class="p">:</span><span class="o">=</span> <span class="mi">1</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">k</span><span class="err">的第</span><span class="n">i</span><span class="err">位</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span>
+</code></pre></div></div>
+<p>定义f[j] 表示对所有i属于<code class="language-plaintext highlighter-rouge">[0,j]</code>内上述和的最小值（即上述和只算到第j位），那么如果有 f[50] &gt; M 的话，显然k不存在，返回-1。
+接下来可以从高位到第位开始，分别考察每一位，如果把这一位设为1的话，是否满足(1),如果满足则可以设为1，否则置0。最后得到的就是结果。这里总和的计算可以用截止到当前位的部分和<code class="language-plaintext highlighter-rouge">sums</code>和当前为置<code class="language-plaintext highlighter-rouge">1</code>的和<code class="language-plaintext highlighter-rouge">zeros[i](* (1&lt;&lt;i))</code>已经右边部分最小值<code class="language-plaintext highlighter-rouge">f[i-1]</code>。</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+    <span class="o">@</span><span class="nb">staticmethod</span>
+    <span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">A</span><span class="p">):</span>
+        <span class="n">ones</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">BITS</span>
+        <span class="n">zeros</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">BITS</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">A</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">shift</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">BITS</span><span class="p">):</span>
+                <span class="c1"># 这里为了方便直接乘上了 2 ** shift。
+</span>                <span class="n">ones</span><span class="p">[</span><span class="n">shift</span><span class="p">]</span> <span class="o">+=</span> <span class="p">((</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="n">shift</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">shift</span><span class="p">)</span>
+                <span class="n">zeros</span><span class="p">[</span><span class="n">shift</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;&gt;</span> <span class="n">shift</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">shift</span><span class="p">)</span>
 
-        f = [0] * (BITS + 1)
-        # 先算出集合f
-        for i in range(BITS):
-            f[i] = min(ones[i], zeros[i])
-        for i in range(BITS):
-            f[i + 1] += f[i]
-        # 最小情况下也超过了M, 显然没有解。
-        if f[50] &gt; M:
-            return -1
-        k = sums = 0
-        for i in range(BITS - 1, -1, -1):
-            front = f[i - 1] if i &gt; 0 else 0
-            # 如果把这一位置1，加上右边的最小值小于等于M, 满足
-            if sums + zeros[i] + front &lt;= M: 
-                k |= (1 &lt;&lt; i)
-                sums += zeros[i]
-            else: # 大于M的话，这一位不能置一
-                sums += ones[i]
+        <span class="n">f</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">BITS</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># 先算出集合f
+</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">BITS</span><span class="p">):</span>
+            <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">ones</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">zeros</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">BITS</span><span class="p">):</span>
+            <span class="n">f</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="c1"># 最小情况下也超过了M, 显然没有解。
+</span>        <span class="k">if</span> <span class="n">f</span><span class="p">[</span><span class="mi">50</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">M</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">sums</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">BITS</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">front</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="c1"># 如果把这一位置1，加上右边的最小值小于等于M, 满足
+</span>            <span class="k">if</span> <span class="n">sums</span> <span class="o">+</span> <span class="n">zeros</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">front</span> <span class="o">&lt;=</span> <span class="n">M</span><span class="p">:</span> 
+                <span class="n">k</span> <span class="o">|=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span>
+                <span class="n">sums</span> <span class="o">+=</span> <span class="n">zeros</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span> <span class="c1"># 大于M的话，这一位不能置一
+</span>                <span class="n">sums</span> <span class="o">+=</span> <span class="n">ones</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
-        return k
-</code></pre>
+        <span class="k">return</span> <span class="n">k</span>
+</code></pre></div></div>
 
 <p>位操作非常灵活，比如上面同一个效果有不同的实现方法，复杂的位操作算法题思路非常的难想，必须对数据的二进制表示以及位操作（尤其是xor，这个考的特别多)有足够的理解和灵活的运用能力，多做题，多总结~</p>
 

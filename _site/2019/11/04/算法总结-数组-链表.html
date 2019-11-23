@@ -48,157 +48,157 @@
 
 <h4 id="一维数组">一维数组</h4>
 <p>一维数组有个相当经典的题目。LeetCode 189. 对数组循环右移k位，一个例子如下</p>
-<pre><code class="language-python">before = [1, 2, 3, 4, 5, 6, 7]
-k = 3
-after =  [5, 6, 7, 1, 2, 3, 4]
-</code></pre>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">before</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">after</span> <span class="o">=</span>  <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</code></pre></div></div>
 <p>要求是in-place，也就是用O(1)的空间，这个题目做过无数遍了（所以直接跳过一步一步移动的愚蠢方法）。使用两次翻转的方法。具体如下：</p>
-<pre><code class="language-python">[1, 2, 3, 4, 5, 6, 7]  # 原始数组
-[4, 3, 2, 1, 7, 6, 5]  # 第一次：分别reverse前n-k个与后k个
-[5, 6, 7, 1, 2, 3, 4]  # 第二次：reverse整个数组。
-</code></pre>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>  <span class="c1"># 原始数组
+</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>  <span class="c1"># 第一次：分别reverse前n-k个与后k个
+</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>  <span class="c1"># 第二次：reverse整个数组。
+</span></code></pre></div></div>
 <p>代码也很简单（C++代码如下）。python可以用切片做，一行就写完了，就不贴代码了。</p>
-<pre><code class="language-c++">class Solution_189 {
-public:
-    void _rotate(vector&lt;int&gt; &amp;nums, int left, int right){
-        while (left &lt; right){
-            int t = nums[left];
-            nums[left] = nums[right];
-            nums[right] = t;
-            left ++;
-            right --;
-        }
-    }
-    void rotate(vector&lt;int&gt;&amp; nums, int k) {
-        int n = nums.size();
-        k = k % n;
-        _rotate(nums, n-k, n-1);
-        _rotate(nums, 0, n-k-1);
-        _rotate(nums, 0, n-1);
-    }
-};
-</code></pre>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_189</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">void</span> <span class="n">_rotate</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">left</span><span class="p">,</span> <span class="kt">int</span> <span class="n">right</span><span class="p">){</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">t</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">];</span>
+            <span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="p">];</span>
+            <span class="n">nums</span><span class="p">[</span><span class="n">right</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+            <span class="n">left</span> <span class="o">++</span><span class="p">;</span>
+            <span class="n">right</span> <span class="o">--</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="kt">void</span> <span class="n">rotate</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">nums</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">nums</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">k</span> <span class="o">%</span> <span class="n">n</span><span class="p">;</span>
+        <span class="n">_rotate</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">_rotate</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">_rotate</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
 <p>链表也有类似的题目，但不同的是，链表移动数据不需要一个一个拷贝，只需要从链上取下在插入就好了，对于这个题目的具体做法在下面单链表部分。</p>
 
 <h4 id="二维数组">二维数组</h4>
 
-<p>LeetCode 48. 顺时针旋转一个二维<code>n</code>阶矩阵90°，这在图像操作中经常用到，要求in-place（注意必须是<code>n</code>阶矩阵才能in-place，否则旋转之后shape不一致）。使用额外的空间来旋转的话就太简单了。考虑一个简单的例子:</p>
-<pre><code class="language-python"># 原二维数组
-[
-  [1,2,3],
-  [4,5,6],
-  [7,8,9]
-]
-</code></pre>
+<p>LeetCode 48. 顺时针旋转一个二维<code class="language-plaintext highlighter-rouge">n</code>阶矩阵90°，这在图像操作中经常用到，要求in-place（注意必须是<code class="language-plaintext highlighter-rouge">n</code>阶矩阵才能in-place，否则旋转之后shape不一致）。使用额外的空间来旋转的话就太简单了。考虑一个简单的例子:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 原二维数组
+</span><span class="p">[</span>
+  <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span>
+  <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span>
+  <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+<span class="p">]</span>
+</code></pre></div></div>
 <p>其顺时针旋转90°的结果为:</p>
-<pre><code class="language-python"># 顺时针旋转90°结果
-[
-  [7,4,1],
-  [8,5,2],
-  [9,6,3]
-]
-</code></pre>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 顺时针旋转90°结果
+</span><span class="p">[</span>
+  <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+  <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+  <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+<span class="p">]</span>
+</code></pre></div></div>
 <p>这题的关键在于<strong>矩阵转置</strong>，上述原始矩阵转置的结果为</p>
-<pre><code class="language-python"># 转置的结果
-[
-  [1,4,7],
-  [2,5,8],
-  [3,6,9]
-]
-</code></pre>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 转置的结果
+</span><span class="p">[</span>
+  <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span>
+  <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span>
+  <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+<span class="p">]</span>
+</code></pre></div></div>
 <p>对比转置和旋转的结果，发现顺时针旋转就是将转置后再对每一行reverse。</p>
-<pre><code class="language-python">class Solution_48:
-    def rotate(self, matrix: List[List[int]]) -&gt; None:
-        """
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_48</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="s">"""
         Do not return anything, modify matrix in-place instead.
-        """
-        n = len(matrix)
-        for i in range(n):
-            for j in range(i):
-                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+        """</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+                <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
 
-        for i in range(n):
-            lo, hi = 0, n - 1
-            while lo &lt; hi:
-                matrix[i][lo], matrix[i][hi] = matrix[i][hi], matrix[i][lo]
-                lo += 1
-                hi -= 1
-</code></pre>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">while</span> <span class="n">lo</span> <span class="o">&lt;</span> <span class="n">hi</span><span class="p">:</span>
+                <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">lo</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">hi</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">hi</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">lo</span><span class="p">]</span>
+                <span class="n">lo</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">hi</span> <span class="o">-=</span> <span class="mi">1</span>
+</code></pre></div></div>
 <p>还可以联想发现，逆时针旋转90°只需要转置后再对每一列reverse就好了。而旋转180°只需要横着对每一行reverse一遍，然后竖着对每一列revese一遍（举一反三）。</p>
 
-<p>LeetCode 54.给定一个<code>m x n</code>矩阵，以螺旋顺序输出其中的矩阵的元素。例如</p>
-<pre><code class="language-python"># 给定如下矩阵
-[
- [ 1, 2, 3 ],
- [ 4, 5, 6 ],
- [ 7, 8, 9 ]
-]
-# 输出[1, 2, 3, 6, 9, 8, 7, 4, 5]
-</code></pre>
+<p>LeetCode 54.给定一个<code class="language-plaintext highlighter-rouge">m x n</code>矩阵，以螺旋顺序输出其中的矩阵的元素。例如</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 给定如下矩阵
+</span><span class="p">[</span>
+ <span class="p">[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">],</span>
+ <span class="p">[</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span> <span class="p">],</span>
+ <span class="p">[</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span> <span class="p">]</span>
+<span class="p">]</span>
+<span class="c1"># 输出[1, 2, 3, 6, 9, 8, 7, 4, 5]
+</span></code></pre></div></div>
 <p>简单的方法是模拟整个过程，如蚂蚁一样爬过整个数组，如果遇到边界则右转弯（爬过的部分也算边界）。这个思路比较简单，代码如解法1。
 还有一个经典的办法叫做矩阵的ring by ring访问法。显然对于一圈数据的访问我们可以分为4个部分，我们用4 x 4的例子来说明，如下图所示。</p>
 
 <p><img src="/blog/assets/images/cs/spiralarray.jpg" alt="" /></p>
 
-<p>图上有颜色的是一圈数据（一个ring）,蓝色部分是我们要访问的第一个部分，显然其坐标为<code>[0][0, n-1]</code>，绿色是接下来要访问的部分，坐标为<code>[1, m-1][n-1]</code>，接下来是黄色部分<code>[m-1][n-2, 0]</code>，最后是橙色部分，左边为<code>[m-2, 1][0]</code>。显然对于每一个部分我们都是固定一个维度，然后确定另一个维度的上下界，由于每次向内移动一环，上下界也可以确定，只需要每次自增或则自减即可。</p>
+<p>图上有颜色的是一圈数据（一个ring）,蓝色部分是我们要访问的第一个部分，显然其坐标为<code class="language-plaintext highlighter-rouge">[0][0, n-1]</code>，绿色是接下来要访问的部分，坐标为<code class="language-plaintext highlighter-rouge">[1, m-1][n-1]</code>，接下来是黄色部分<code class="language-plaintext highlighter-rouge">[m-1][n-2, 0]</code>，最后是橙色部分，左边为<code class="language-plaintext highlighter-rouge">[m-2, 1][0]</code>。显然对于每一个部分我们都是固定一个维度，然后确定另一个维度的上下界，由于每次向内移动一环，上下界也可以确定，只需要每次自增或则自减即可。</p>
 
-<pre><code class="language-python">class Solution_54:
-    # 解法1
-    def spiralOrder(self, matrix):
-        m = len(matrix)
-        n = len(matrix[0]) if m else 0
-        if m == 0 or n == 0:
-            return []
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_54</span><span class="p">:</span>
+    <span class="c1"># 解法1
+</span>    <span class="k">def</span> <span class="nf">spiralOrder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">):</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">m</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
 
-        visit = [[False] * n for _ in matrix]
-        res = []
+        <span class="n">visit</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">False</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
         
-        # 爬行过程中，先向右，再向下，再向左，最后向上 
-        dirt = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # right, down, left, up 
+        <span class="c1"># 爬行过程中，先向右，再向下，再向左，最后向上 
+</span>        <span class="n">dirt</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>  <span class="c1"># right, down, left, up 
+</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="o">=</span> <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span> <span class="o">*</span> <span class="n">n</span><span class="p">):</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+            <span class="n">visit</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">ni</span><span class="p">,</span> <span class="n">nj</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">dirt</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">j</span> <span class="o">+</span> <span class="n">dirt</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">ni</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nj</span> <span class="o">&lt;</span> <span class="n">n</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">visit</span><span class="p">[</span><span class="n">ni</span><span class="p">][</span><span class="n">nj</span><span class="p">]:</span> <span class="c1"># 遇到边界了
+</span>                <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ni</span><span class="p">,</span> <span class="n">nj</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span>
+                <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">dirt</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">j</span> <span class="o">+</span> <span class="n">dirt</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">res</span>
 
-        i = j = idx = 0
-        for _ in range(m * n):
-            res.append(matrix[i][j])
-            visit[i][j] = True
-            ni, nj = i + dirt[idx][0], j + dirt[idx][1]
-            if 0 &lt;= ni &lt; m and 0 &lt;= nj &lt; n and not visit[ni][nj]: # 遇到边界了
-                i, j = ni, nj
-            else:
-                idx = (idx + 1) % 4
-                i, j = i + dirt[idx][0], j + dirt[idx][1]
-        return res
-
-    # 解法2
-    def spiralOrder(self, matrix):
-        m = len(matrix)
-        n = len(matrix[0]) if m else 0
-        if m == 0 or n == 0:
-            return []
+    <span class="c1"># 解法2
+</span>    <span class="k">def</span> <span class="nf">spiralOrder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">):</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">m</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
         
-        res = []
-        rowu, rowd = 0, m - 1  # 这里可以用一个up, down = m - 1 - up，但是写起来太麻烦
-        coll, colr = 0, n - 1  # 同上，我喜欢用两个变量标识边界。
-        while rowu &lt;= rowd and coll &lt;= colr:
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">rowu</span><span class="p">,</span> <span class="n">rowd</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># 这里可以用一个up, down = m - 1 - up，但是写起来太麻烦
+</span>        <span class="n">coll</span><span class="p">,</span> <span class="n">colr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># 同上，我喜欢用两个变量标识边界。
+</span>        <span class="k">while</span> <span class="n">rowu</span> <span class="o">&lt;=</span> <span class="n">rowd</span> <span class="ow">and</span> <span class="n">coll</span> <span class="o">&lt;=</span> <span class="n">colr</span><span class="p">:</span>
 
-            for j in range(coll, colr + 1):  # [rowu][coll, colr]
-                res.append(matrix[rowu][j])
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">coll</span><span class="p">,</span> <span class="n">colr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>  <span class="c1"># [rowu][coll, colr]
+</span>                <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">rowu</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
 
-            for i in range(rowu + 1, rowd + 1):  # [rowu+1, rowd][colr]
-                res.append(matrix[i][colr])
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowu</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rowd</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>  <span class="c1"># [rowu+1, rowd][colr]
+</span>                <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">colr</span><span class="p">])</span>
 
-            if rowu &lt; rowd and coll &lt; colr:
-                for j in range(colr - 1, coll, -1):  # [rowd][colr-1, colr+1]
-                    res.append(matrix[rowd][j])
+            <span class="k">if</span> <span class="n">rowu</span> <span class="o">&lt;</span> <span class="n">rowd</span> <span class="ow">and</span> <span class="n">coll</span> <span class="o">&lt;</span> <span class="n">colr</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">colr</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">coll</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># [rowd][colr-1, colr+1]
+</span>                    <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">rowd</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
 
-                for i in range(rowd, rowu, -1):  # [rowd, rowu+1][coll]
-                    res.append(matrix[i][coll])
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rowd</span><span class="p">,</span> <span class="n">rowu</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>  <span class="c1"># [rowd, rowu+1][coll]
+</span>                    <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">coll</span><span class="p">])</span>
 
-            rowu += 1
-            rowd -= 1
-            coll += 1
-            colr -= 1
-        return res
-</code></pre>
+            <span class="n">rowu</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">rowd</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">coll</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">colr</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">res</span>
+</code></pre></div></div>
 
 <p>上面这个题目有两个点比较重要。</p>
 <ul>
@@ -211,92 +211,92 @@ public:
 <p>然后回到上面的题目LeetCode 48.这个能不能ring by ring呢，当然可以~。但难点在于定位，完全没有转置在进行翻转的方法直观。(我是想不出来这种解法的)，使用一个4x4的例子来说明。
 <img src="/blog/assets/images/cs/rotate_array.jpg" alt="" />
 如上面一列中，对应四个角的元素不在最终的目标位置上，我们可以通过三次交换（依次与左上角的元素进行交换）来讲他们放到对应的位置上，之后我们将四个位置移动到各自的下一个位置，然后执行同样的（依次与左上角的那个做三次交换），这样四个元素也都移动到了最终的位置，我们依次循环进行下去，直到这一环的元素都被置到确定的位置上。那么什么时候可以确定这一环的元素交换完了呢？答案是与上面ring by ring一样，循环完了左到右的部分（因为是n阶阵，所以四个部分是同步的，用一个循环就能表示这一环）。代码如下：</p>
-<pre><code class="language-python">class Solution_48:
-    def rotate(self, matrix: List[List[int]]) -&gt; None:
-        n = len(matrix)
-        lo, hi = 0, n-1
-        while lo &lt; hi:
-            for i in range(hi-lo): # lo + i == hi 表示循环完了这一环
-                # 三个元素依次与左上角元素交换
-                matrix[lo][lo+i], matrix[lo+i][hi] = matrix[lo+i][hi], matrix[lo][lo+i]
-                matrix[lo][lo+i], matrix[hi][hi-i] = matrix[hi][hi-i], matrix[lo][lo+i]
-                matrix[lo][lo+i], matrix[hi-i][lo] = matrix[hi-i][lo], matrix[lo][lo+i]
-            # 之后lo自增，hi自减，表示进入内层ring
-            # 同样可以只是用一个lo来表示，hi = n - 1 - lo.但写起来麻烦
-            lo += 1
-            hi -= 1
-</code></pre>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_48</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+        <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span>
+        <span class="k">while</span> <span class="n">lo</span> <span class="o">&lt;</span> <span class="n">hi</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">hi</span><span class="o">-</span><span class="n">lo</span><span class="p">):</span> <span class="c1"># lo + i == hi 表示循环完了这一环
+</span>                <span class="c1"># 三个元素依次与左上角元素交换
+</span>                <span class="n">matrix</span><span class="p">[</span><span class="n">lo</span><span class="p">][</span><span class="n">lo</span><span class="o">+</span><span class="n">i</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">lo</span><span class="o">+</span><span class="n">i</span><span class="p">][</span><span class="n">hi</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">lo</span><span class="o">+</span><span class="n">i</span><span class="p">][</span><span class="n">hi</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">lo</span><span class="p">][</span><span class="n">lo</span><span class="o">+</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">matrix</span><span class="p">[</span><span class="n">lo</span><span class="p">][</span><span class="n">lo</span><span class="o">+</span><span class="n">i</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">hi</span><span class="p">][</span><span class="n">hi</span><span class="o">-</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">hi</span><span class="p">][</span><span class="n">hi</span><span class="o">-</span><span class="n">i</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">lo</span><span class="p">][</span><span class="n">lo</span><span class="o">+</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">matrix</span><span class="p">[</span><span class="n">lo</span><span class="p">][</span><span class="n">lo</span><span class="o">+</span><span class="n">i</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">hi</span><span class="o">-</span><span class="n">i</span><span class="p">][</span><span class="n">lo</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="n">hi</span><span class="o">-</span><span class="n">i</span><span class="p">][</span><span class="n">lo</span><span class="p">],</span> <span class="n">matrix</span><span class="p">[</span><span class="n">lo</span><span class="p">][</span><span class="n">lo</span><span class="o">+</span><span class="n">i</span><span class="p">]</span>
+            <span class="c1"># 之后lo自增，hi自减，表示进入内层ring
+</span>            <span class="c1"># 同样可以只是用一个lo来表示，hi = n - 1 - lo.但写起来麻烦
+</span>            <span class="n">lo</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">hi</span> <span class="o">-=</span> <span class="mi">1</span>
+</code></pre></div></div>
 
 <h4 id="单链表">单链表</h4>
-<p>对数组右移k位得链表版本LeetCode 61.没啥fancy得技巧，第一遍数节点数<code>n</code>，然后构成环，在一遍数<code>n-k</code>个位置，然后断开（右移<code>k</code>位就是将前<code>n-k</code>个节点摘下来放到后面去）。</p>
-<pre><code class="language-python">class Solution_61:
-    def rotateRight(self, head: ListNode, k: int) -&gt; ListNode:
-        if not head:
-            return head
-        n = 1
-        t = head
-        while t.next:
-            n += 1
-            t = t.next
+<p>对数组右移k位得链表版本LeetCode 61.没啥fancy得技巧，第一遍数节点数<code class="language-plaintext highlighter-rouge">n</code>，然后构成环，在一遍数<code class="language-plaintext highlighter-rouge">n-k</code>个位置，然后断开（右移<code class="language-plaintext highlighter-rouge">k</code>位就是将前<code class="language-plaintext highlighter-rouge">n-k</code>个节点摘下来放到后面去）。</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_61</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">rotateRight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ListNode</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">head</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">head</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">head</span>
+        <span class="k">while</span> <span class="n">t</span><span class="o">.</span><span class="nb">next</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="nb">next</span>
             
-        t.next = head
+        <span class="n">t</span><span class="o">.</span><span class="nb">next</span> <span class="o">=</span> <span class="n">head</span>
         
-        k %= n
-        if k:
-            for i in range(n-k):
-                t = t.next
-        newh = t.next
-        t.next = None
-        return newh
-</code></pre>
+        <span class="n">k</span> <span class="o">%=</span> <span class="n">n</span>
+        <span class="k">if</span> <span class="n">k</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">):</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="nb">next</span>
+        <span class="n">newh</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="nb">next</span>
+        <span class="n">t</span><span class="o">.</span><span class="nb">next</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="n">newh</span>
+</code></pre></div></div>
 <p>LeetCode 143. 将一个链表得顺序由L0 -&gt; L1 -&gt; … -&gt; Ln得顺序变成L0 -&gt; Ln -&gt; L1 -&gt; Ln-1…依然要求in-place，使用最直观得方法。</p>
 <ul>
   <li>第一步，使用快慢指针找到中点</li>
   <li>第二步，将后半段链表反向</li>
   <li>第三步，合并成目标顺序。
-    <pre><code class="language-python">class Solution_143:
-  def reorderList(self, head: ListNode) -&gt; None:
-      """
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_143</span><span class="p">:</span>
+  <span class="k">def</span> <span class="nf">reorderList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">ListNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="s">"""
       Do not return anything, modify head in-place instead.
-      """
-      if not head:
-          return
-      # find the middle node
-      t = p = q = head
-      while p:
-          t = q
-          q = q.next
-          p = p.next
-          if p:
-              p = p.next
-      t.next = None  # 断链
-      # reverse right half
-      mid = ListNode(None)
-      mid.next = q
-      q = mid
-      p = q
-      while p:
-          t = p.next
-          p.next = q
-          q = p
-          p = t
-      # merge
-      p = head
-      while p and q != mid:
-          t = q.next
-          q.next = p.next
-          p.next = q
-          p = q.next
-          q = t
-</code></pre>
+      """</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">head</span><span class="p">:</span>
+          <span class="k">return</span>
+      <span class="c1"># find the middle node
+</span>      <span class="n">t</span> <span class="o">=</span> <span class="n">p</span> <span class="o">=</span> <span class="n">q</span> <span class="o">=</span> <span class="n">head</span>
+      <span class="k">while</span> <span class="n">p</span><span class="p">:</span>
+          <span class="n">t</span> <span class="o">=</span> <span class="n">q</span>
+          <span class="n">q</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="nb">next</span>
+          <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="nb">next</span>
+          <span class="k">if</span> <span class="n">p</span><span class="p">:</span>
+              <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="nb">next</span>
+      <span class="n">t</span><span class="o">.</span><span class="nb">next</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># 断链
+</span>      <span class="c1"># reverse right half
+</span>      <span class="n">mid</span> <span class="o">=</span> <span class="n">ListNode</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+      <span class="n">mid</span><span class="o">.</span><span class="nb">next</span> <span class="o">=</span> <span class="n">q</span>
+      <span class="n">q</span> <span class="o">=</span> <span class="n">mid</span>
+      <span class="n">p</span> <span class="o">=</span> <span class="n">q</span>
+      <span class="k">while</span> <span class="n">p</span><span class="p">:</span>
+          <span class="n">t</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="nb">next</span>
+          <span class="n">p</span><span class="o">.</span><span class="nb">next</span> <span class="o">=</span> <span class="n">q</span>
+          <span class="n">q</span> <span class="o">=</span> <span class="n">p</span>
+          <span class="n">p</span> <span class="o">=</span> <span class="n">t</span>
+      <span class="c1"># merge
+</span>      <span class="n">p</span> <span class="o">=</span> <span class="n">head</span>
+      <span class="k">while</span> <span class="n">p</span> <span class="ow">and</span> <span class="n">q</span> <span class="o">!=</span> <span class="n">mid</span><span class="p">:</span>
+          <span class="n">t</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="nb">next</span>
+          <span class="n">q</span><span class="o">.</span><span class="nb">next</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="nb">next</span>
+          <span class="n">p</span><span class="o">.</span><span class="nb">next</span> <span class="o">=</span> <span class="n">q</span>
+          <span class="n">p</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="nb">next</span>
+          <span class="n">q</span> <span class="o">=</span> <span class="n">t</span>
+</code></pre></div>    </div>
     <p>题目很简单，都是链表的基本操作，有一些值得注意的小细节。</p>
   </li>
-  <li>使用快慢指针查找中点时，有时需要取第<code>n//2</code>,有时需要取第<code>(n+1)//2</code>个。看题目不同，决定要不要使用链头节点。</li>
+  <li>使用快慢指针查找中点时，有时需要取第<code class="language-plaintext highlighter-rouge">n//2</code>,有时需要取第<code class="language-plaintext highlighter-rouge">(n+1)//2</code>个。看题目不同，决定要不要使用链头节点。</li>
   <li>链表翻转的时候最好在纸上画一下示意图，不然容易断链或者构成环。</li>
   <li>合并循环的终止条件，小心别把链头节点合并进去了（因为后半段使用了链头节点）。</li>
 </ul>
 
-<p>最后讲一个关于链表的环的问题，LeetCode 287.给定一个包含<code>n+1</code>个在区间<code>[1, n]</code>内的数，证明一定至少有一个数重复出现了，假如只有一个重复出现的数，找出这个数。要求：</p>
+<p>最后讲一个关于链表的环的问题，LeetCode 287.给定一个包含<code class="language-plaintext highlighter-rouge">n+1</code>个在区间<code class="language-plaintext highlighter-rouge">[1, n]</code>内的数，证明一定至少有一个数重复出现了，假如只有一个重复出现的数，找出这个数。要求：</p>
 <ul>
   <li>不能修改数组（如果可以修改数组对应于另外一类经典的题目,类似LeetCode 268，LeetCode 41等）</li>
   <li>空间复杂度O(1)</li>
@@ -305,14 +305,14 @@ public:
 </ul>
 
 <p>这个题目数据是用数组存储的，但是数据可以当作链表的思想来处理。如给定数组</p>
-<pre><code class="language-python">[1, 3, 4, 2, 2]
-</code></pre>
-<p>链头从下标<code>0</code>开始，可以当作一个链表：</p>
-<pre><code class="language-python"># 1 -&gt; 3 -&gt; 2 -&gt; 4
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</code></pre></div></div>
+<p>链头从下标<code class="language-plaintext highlighter-rouge">0</code>开始，可以当作一个链表：</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 1 -&gt; 3 -&gt; 2 -&gt; 4
 #           ↑____↓
-</code></pre>
+</span></code></pre></div></div>
 <p>环的入口就是重复出现的数字，因为不能修改数组，就只能使用链表查找环入口的方式。对于链表的查找环的方式为</p>
-<pre><code class="language-python"># 假设 循环链为  A ---&gt;  B ---&gt; C
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 假设 循环链为  A ---&gt;  B ---&gt; C
 #                       ^      |
 #                       +------+
 # 其中循环的入口点为B，假设快慢指针相遇点是C(C是环上任意一点)
@@ -324,36 +324,36 @@ public:
 #           新指针：A -&gt; B -&gt; C 共N步 (从开头出发，走N步到达C)
 #        而实际中由于过程中两个指针同时经过B，这一段的总长度一样为N, 
 #        后半段B-&gt;...-&gt;C长度是一样.因此一定在B（循环入口点）点相遇。。
-</code></pre>
+</span></code></pre></div></div>
 <p>则这道题的代码如下解法1，如果可以修改数组，可以由更简单的方法，如下解法2.</p>
-<pre><code class="language-python">class Solution_287:
-    # 解法1
-    def findDuplicate(self, nums) -&gt; int:
-        slow = fast = nums[0]
-        # 第一步
-        while True: # 一定会相遇，所以在循环中break
-            slow = nums[slow]
-            fast = nums[fast]
-            fast = nums[fast]
-            if slow == fast: # 快慢指针相遇了
-                break
-        # 第二步
-        ptr1 = nums[0]
-        ptr2 = slow
-        while ptr1 != ptr2: # 直到第一次相遇，即是环入口
-            ptr1 = nums[ptr1]
-            ptr2 = nums[ptr2]
-        return ptr1
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_287</span><span class="p">:</span>
+    <span class="c1"># 解法1
+</span>    <span class="k">def</span> <span class="nf">findDuplicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">slow</span> <span class="o">=</span> <span class="n">fast</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># 第一步
+</span>        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span> <span class="c1"># 一定会相遇，所以在循环中break
+</span>            <span class="n">slow</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">slow</span><span class="p">]</span>
+            <span class="n">fast</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">fast</span><span class="p">]</span>
+            <span class="n">fast</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">fast</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">slow</span> <span class="o">==</span> <span class="n">fast</span><span class="p">:</span> <span class="c1"># 快慢指针相遇了
+</span>                <span class="k">break</span>
+        <span class="c1"># 第二步
+</span>        <span class="n">ptr1</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ptr2</span> <span class="o">=</span> <span class="n">slow</span>
+        <span class="k">while</span> <span class="n">ptr1</span> <span class="o">!=</span> <span class="n">ptr2</span><span class="p">:</span> <span class="c1"># 直到第一次相遇，即是环入口
+</span>            <span class="n">ptr1</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">ptr1</span><span class="p">]</span>
+            <span class="n">ptr2</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">ptr2</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">ptr1</span>
     
-    # 解法2
-    def findDuplicate(self, nums) -&gt; int:
-        index = nums[0]
-        # 将对应位置设置为对应的数值，标记为已经访问过，
-        # 如果已经访问过 index == nums[index] 就找到了环入口
-        while index != nums[index]:
-            index, nums[index] = nums[index], index
-        return index
-</code></pre>
+    <span class="c1"># 解法2
+</span>    <span class="k">def</span> <span class="nf">findDuplicate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># 将对应位置设置为对应的数值，标记为已经访问过，
+</span>        <span class="c1"># 如果已经访问过 index == nums[index] 就找到了环入口
+</span>        <span class="k">while</span> <span class="n">index</span> <span class="o">!=</span> <span class="n">nums</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span>
+            <span class="n">index</span><span class="p">,</span> <span class="n">nums</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">nums</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">index</span>
+        <span class="k">return</span> <span class="n">index</span>
+</code></pre></div></div>
 <p>其他一些链表环的问题LeetCode 141, LeetCode 142。</p>
 
 <p>这一篇涉及到的都是简单的问题，实际做也都可以做的出来，就是数组下标的容易算错，链表操作中容易断链，需要一番debug才能找到问题，实际中还有很多类似得问题，比如上三角矩阵得一维存储，比如链表每k个数为一组进行reverse，以后遇到类似问题要注意：</p>

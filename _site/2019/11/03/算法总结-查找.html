@@ -44,271 +44,271 @@
 <p>顺序查找就是无脑扫描一遍，然后对每个元素和key进行比较，如相同则找到，扫描结束也没有找到即为查找失败。（这个真的很简单）</p>
 
 <h4 id="二分查找">二分查找</h4>
-<p>二分查找需要查找表是<strong>有序</strong>的，让给定key和中间节点比较，中间节点把要查找的元素分成两半。如LeetCode 69.求解<code>sqrt(n)</code>的近似整数解。</p>
-<pre><code class="language-python">class Solution_69:
-    def mySqrt(self, x: int) -&gt; int:
-        lo = 0
-        hi = x // 2 + 1
-        while lo &lt;= hi:
-            mid = (lo + hi) &gt;&gt; 1
-            t = mid * mid
-            if t == x:
-                return mid
-            elif t &lt; x:
-                lo = mid + 1
-            else:
-                hi = mid - 1
-        return hi
-</code></pre>
+<p>二分查找需要查找表是<strong>有序</strong>的，让给定key和中间节点比较，中间节点把要查找的元素分成两半。如LeetCode 69.求解<code class="language-plaintext highlighter-rouge">sqrt(n)</code>的近似整数解。</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_69</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">mySqrt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="n">lo</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">hi</span> <span class="o">=</span> <span class="n">x</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">lo</span> <span class="o">&lt;=</span> <span class="n">hi</span><span class="p">:</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">lo</span> <span class="o">+</span> <span class="n">hi</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">*</span> <span class="n">mid</span>
+            <span class="k">if</span> <span class="n">t</span> <span class="o">==</span> <span class="n">x</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">mid</span>
+            <span class="k">elif</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">x</span><span class="p">:</span>
+                <span class="n">lo</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">hi</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">hi</span>
+</code></pre></div></div>
 <p>上述代码就是典型的二分查找的框架，代码本身很简单，不过中间有一些点值得注意：</p>
 <ol>
-  <li>循环的终止条件和更新左右边界相关, <code>lo&lt;=hi</code>/<code>lo&lt;hi</code>对应于取中间节点（mid是否+/-1），否则很容易随手写一个死循环，不过这个错误很容易通过测试查出来。</li>
-  <li><code>mid = (lo + hi) // 2</code> 在python中，整数不会溢出这样不会有问题，在C++中，有可能lo+hi的值超出了32位整数表示范围，会产生错误，所以衍生出了几个写法
-    <pre><code class="language-c++">int mid = (lo + hi) / 2;       // C++ int/int = int ,python 要用整数除运算符 `//`
-int mid = (lo + hi) &gt;&gt; 1;
-int mid = lo + (hi - lo) / 2;  // 后面两个最安全的, 不过注意python3中
-int mid = lo + (hi - lo) &gt;&gt; 1; // +/-运算符的优先级比移位运算高，所以要加括号 
-</code></pre>
+  <li>循环的终止条件和更新左右边界相关, <code class="language-plaintext highlighter-rouge">lo&lt;=hi</code>/<code class="language-plaintext highlighter-rouge">lo&lt;hi</code>对应于取中间节点（mid是否+/-1），否则很容易随手写一个死循环，不过这个错误很容易通过测试查出来。</li>
+  <li><code class="language-plaintext highlighter-rouge">mid = (lo + hi) // 2</code> 在python中，整数不会溢出这样不会有问题，在C++中，有可能lo+hi的值超出了32位整数表示范围，会产生错误，所以衍生出了几个写法
+    <div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">lo</span> <span class="o">+</span> <span class="n">hi</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>       <span class="c1">// C++ int/int = int ,python 要用整数除运算符 `//`</span>
+<span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">lo</span> <span class="o">+</span> <span class="n">hi</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">lo</span> <span class="o">+</span> <span class="p">(</span><span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>  <span class="c1">// 后面两个最安全的, 不过注意python3中</span>
+<span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">lo</span> <span class="o">+</span> <span class="p">(</span><span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// +/-运算符的优先级比移位运算高，所以要加括号 </span>
+</code></pre></div>    </div>
   </li>
   <li>二分查找适合用有序的顺序表，链表取中点太麻烦，顺序表如果经常插入删除也不合适。</li>
 </ol>
 
-<p>简单有序数组的查找中，直接使用二分法框架进行查找即可，如LeetCode 34.在一个有序数组中找到一个元素的第一次和最后一次出现的位置。要求<code>O(logn)</code>时间复杂度，当然使用二分法。唯一不同的是是要用二分查找两次，第一次出现的位置和最后一次出现的位置。</p>
-<pre><code class="language-python">class Solution_34:
-    # 愚蠢的写法
-    def _searchRange(self, nums: List[int], target: int) -&gt; List[int]:
-        # O(log n) definitely Binary Search
-        lo, hi = 0, len(nums) - 1
-        res = [-1, -1]
-        while lo &lt;= hi:
-            mid = (lo + hi) &gt;&gt; 1
-            if nums[mid] == target:
-                res[0] = mid
-                hi = mid - 1
-            elif nums[mid] &gt; target:
-                hi = mid - 1
-            else:
-                lo = mid + 1
+<p>简单有序数组的查找中，直接使用二分法框架进行查找即可，如LeetCode 34.在一个有序数组中找到一个元素的第一次和最后一次出现的位置。要求<code class="language-plaintext highlighter-rouge">O(logn)</code>时间复杂度，当然使用二分法。唯一不同的是是要用二分查找两次，第一次出现的位置和最后一次出现的位置。</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_34</span><span class="p">:</span>
+    <span class="c1"># 愚蠢的写法
+</span>    <span class="k">def</span> <span class="nf">_searchRange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="c1"># O(log n) definitely Binary Search
+</span>        <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">while</span> <span class="n">lo</span> <span class="o">&lt;=</span> <span class="n">hi</span><span class="p">:</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">lo</span> <span class="o">+</span> <span class="n">hi</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">mid</span>
+                <span class="n">hi</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">hi</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lo</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
 
-        lo, hi = 0, len(nums) - 1
-        while lo &lt;= hi:
-            mid = (lo + hi + 1) &gt;&gt; 1
-            if nums[mid] == target:
-                res[1] = mid
-                lo = mid + 1
-            elif nums[mid] &lt; target:
-                lo = mid + 1
-            else:
-                hi = mid - 1
+        <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">while</span> <span class="n">lo</span> <span class="o">&lt;=</span> <span class="n">hi</span><span class="p">:</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">lo</span> <span class="o">+</span> <span class="n">hi</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">==</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">mid</span>
+                <span class="n">lo</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">:</span>
+                <span class="n">lo</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">hi</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span>
 
-        return res
+        <span class="k">return</span> <span class="n">res</span>
     
-    # fancy一点的写法
-    def searchRange(self, nums: List[int], target: int) -&gt; List[int]:
-        def binsearch(nums, t, eq):
-            lo = 0
-            hi = len(nums)  # 可以取到最后一个的后面，这样返回值减一指向最后一个
-            while lo &lt; hi:
-                mid = (lo + hi) &gt;&gt; 1
-                if nums[mid] &gt; target or (eq and target == nums[mid]):
-                    hi = mid
-                else:
-                    lo = mid + 1
-            return lo
+    <span class="c1"># fancy一点的写法
+</span>    <span class="k">def</span> <span class="nf">searchRange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">target</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="k">def</span> <span class="nf">binsearch</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">eq</span><span class="p">):</span>
+            <span class="n">lo</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">hi</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>  <span class="c1"># 可以取到最后一个的后面，这样返回值减一指向最后一个
+</span>            <span class="k">while</span> <span class="n">lo</span> <span class="o">&lt;</span> <span class="n">hi</span><span class="p">:</span>
+                <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">lo</span> <span class="o">+</span> <span class="n">hi</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">target</span> <span class="ow">or</span> <span class="p">(</span><span class="n">eq</span> <span class="ow">and</span> <span class="n">target</span> <span class="o">==</span> <span class="n">nums</span><span class="p">[</span><span class="n">mid</span><span class="p">]):</span>
+                    <span class="n">hi</span> <span class="o">=</span> <span class="n">mid</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">lo</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">lo</span>
 
-        left = binsearch(nums, target, eq=True)  # 找第一个大于等于target的
-        if len(nums) == left or nums[left] != target:
-            return [-1, -1]
+        <span class="n">left</span> <span class="o">=</span> <span class="n">binsearch</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">eq</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  <span class="c1"># 找第一个大于等于target的
+</span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span> <span class="o">==</span> <span class="n">left</span> <span class="ow">or</span> <span class="n">nums</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">!=</span> <span class="n">target</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-        return [left, binsearch(nums, target, eq=False) - 1]  # 第二找大于target的
-</code></pre>
+        <span class="k">return</span> <span class="p">[</span><span class="n">left</span><span class="p">,</span> <span class="n">binsearch</span><span class="p">(</span><span class="n">nums</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">eq</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># 第二找大于target的
+</span></code></pre></div></div>
 
-<p>再比如非常非常非常经典的题目LeetCode 4.找两个有序数组的中位数。这个题的关键在于理解中位数是将数组划分为左右两边数目相等的两个子集的数，但是直接用暴力数到中间位置，显然太蠢了。两个数组都是有序的，我们可以使用二分查找来降低复杂度。对于数组A和B，以及他们的长度m和n，我们有i, j将分别将A,B分为两部分，分别是<code>A[:i-1]</code>, <code>A[i:m]</code>,<code>B[:j-1]</code>,<code>A[j:n]</code>。</p>
+<p>再比如非常非常非常经典的题目LeetCode 4.找两个有序数组的中位数。这个题的关键在于理解中位数是将数组划分为左右两边数目相等的两个子集的数，但是直接用暴力数到中间位置，显然太蠢了。两个数组都是有序的，我们可以使用二分查找来降低复杂度。对于数组A和B，以及他们的长度m和n，我们有i, j将分别将A,B分为两部分，分别是<code class="language-plaintext highlighter-rouge">A[:i-1]</code>, <code class="language-plaintext highlighter-rouge">A[i:m]</code>,<code class="language-plaintext highlighter-rouge">B[:j-1]</code>,<code class="language-plaintext highlighter-rouge">A[j:n]</code>。</p>
 
 <p>如果我们能够保证:</p>
 <ul>
-  <li><code>len(A[:j-1]) + len(B[:j-1]) == len(A[i:m]) + len(B[j:n]) (or +1)</code></li>
-  <li><code>max(max(A[:j-1]) max(B[:j-1])) &lt; min(min(A[i:m]), min(B[j:n]))</code></li>
+  <li><code class="language-plaintext highlighter-rouge">len(A[:j-1]) + len(B[:j-1]) == len(A[i:m]) + len(B[j:n]) (or +1)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">max(max(A[:j-1]) max(B[:j-1])) &lt; min(min(A[i:m]), min(B[j:n]))</code></li>
 </ul>
 
-<p>我们就将A+B划分成了等长的（或者长度相差为1的两部分）,我们就找到了中位数。幸运的是A和B是有序的，因此<code>max</code>,<code>min</code>很简单，上述两个条件变成了</p>
+<p>我们就将A+B划分成了等长的（或者长度相差为1的两部分）,我们就找到了中位数。幸运的是A和B是有序的，因此<code class="language-plaintext highlighter-rouge">max</code>,<code class="language-plaintext highlighter-rouge">min</code>很简单，上述两个条件变成了</p>
 <ul>
-  <li><code>i+j == m-i + n-j (or + 1)</code></li>
-  <li><code>B[j-1] &lt;= A[i] and A[i-1] &lt;= B[j]</code></li>
+  <li><code class="language-plaintext highlighter-rouge">i+j == m-i + n-j (or + 1)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">B[j-1] &lt;= A[i] and A[i-1] &lt;= B[j]</code></li>
 </ul>
 
-<p>我们取<code>j = (m + n + 1) // 2 - i</code>，这样我们就能在<code>[0, m]</code>区间上对<code>i</code>进行二分查找，同时使用上面两个限制条件，找到了正确的i之后，我们再对一些特殊的边界条件进行判断处理，就可以得出正确的结果了。</p>
+<p>我们取<code class="language-plaintext highlighter-rouge">j = (m + n + 1) // 2 - i</code>，这样我们就能在<code class="language-plaintext highlighter-rouge">[0, m]</code>区间上对<code class="language-plaintext highlighter-rouge">i</code>进行二分查找，同时使用上面两个限制条件，找到了正确的i之后，我们再对一些特殊的边界条件进行判断处理，就可以得出正确的结果了。</p>
 
-<pre><code class="language-python">class Solution_4:
-    def findMedianSortedArrays(self, A: List[int], B: List[int]) -&gt; float:
-        if len(A) &gt; len(B):
-            A, B = B, A
-        m = len(A)
-        n = len(B)
-        left, right = 0, m   # 二分查找的区间
-        while left &lt;= right:
-            i = left + (right - left) // 2
-            j = (m + n + 1) // 2 - i
-            if i &lt; m and B[j-1] &gt; A[i]:
-                left = i + 1
-            elif i &gt; 0 and A[i-1] &gt; B[j]: 
-                right = i - 1
-            else:
-                # 一些特殊情况需要单独判断
-                if i == 0:        #  A的左半部分为空
-                    maxleft = B[j-1]
-                elif j == 0:      # B的左半部分为空
-                    maxleft = A[i-1]
-                else:
-                    maxleft =  max(A[i-1], B[j-1])
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_4</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">findMedianSortedArrays</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">A</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">B</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">):</span>
+            <span class="n">A</span><span class="p">,</span> <span class="n">B</span> <span class="o">=</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+        <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">m</span>   <span class="c1"># 二分查找的区间
+</span>        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="p">:</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">left</span> <span class="o">+</span> <span class="p">(</span><span class="n">right</span> <span class="o">-</span> <span class="n">left</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">i</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="ow">and</span> <span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">left</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span> 
+                <span class="n">right</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># 一些特殊情况需要单独判断
+</span>                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>        <span class="c1">#  A的左半部分为空
+</span>                    <span class="n">maxleft</span> <span class="o">=</span> <span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>      <span class="c1"># B的左半部分为空
+</span>                    <span class="n">maxleft</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">maxleft</span> <span class="o">=</span>  <span class="nb">max</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
                 
-                if (m + n) &amp; 1:        # 奇数个长度，左边比右边多一个，
-                    return maxleft     # 取左边最大值
-
-                if i == m:        # A的右半部分为空
-                    minright=B[j]
-                elif j==n:        # B的右半部分为空
-                    minright=A[i]
-                else:
-                    minright = min(A[i], B[j])
+                <span class="k">if</span> <span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">:</span>        <span class="c1"># 奇数个长度，左边比右边多一个，
+</span>                    <span class="k">return</span> <span class="n">maxleft</span>     <span class="c1"># 取左边最大值
+</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">m</span><span class="p">:</span>        <span class="c1"># A的右半部分为空
+</span>                    <span class="n">minright</span><span class="o">=</span><span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">j</span><span class="o">==</span><span class="n">n</span><span class="p">:</span>        <span class="c1"># B的右半部分为空
+</span>                    <span class="n">minright</span><span class="o">=</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">minright</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">B</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
       
-                return (maxleft + minright) / 2
-</code></pre>
+                <span class="k">return</span> <span class="p">(</span><span class="n">maxleft</span> <span class="o">+</span> <span class="n">minright</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+</code></pre></div></div>
 
-<p>然而有一类题目中，并没有一个明确的表要去查找，而是解在一个可能的区间内，或者解可以通过构造的方式映射到一个区间的，在这个区间上就适合使用二分查找。如LeetCode 1201.找出第n个能够被a或b或c整除的正整数，n,a,b,c取值范围为<code>[1,1e9]</code>，解的值不会超过<code>2e9</code>，暴力的办法是对从1开始对正整数依次检查是否满足，数到第n个的时候即为答案，如下暴力解法。但这种效率太低，很多无用的检查。更好的办法是根据a,b,c进行生成，他们的倍数自然是能够被它们整除的数。只需要从最小的开始，生成到第n个即为答案。实际上对于<code>1e9</code>数量级，必须思考<code>O(logn)</code>的解法。</p>
+<p>然而有一类题目中，并没有一个明确的表要去查找，而是解在一个可能的区间内，或者解可以通过构造的方式映射到一个区间的，在这个区间上就适合使用二分查找。如LeetCode 1201.找出第n个能够被a或b或c整除的正整数，n,a,b,c取值范围为<code class="language-plaintext highlighter-rouge">[1,1e9]</code>，解的值不会超过<code class="language-plaintext highlighter-rouge">2e9</code>，暴力的办法是对从1开始对正整数依次检查是否满足，数到第n个的时候即为答案，如下暴力解法。但这种效率太低，很多无用的检查。更好的办法是根据a,b,c进行生成，他们的倍数自然是能够被它们整除的数。只需要从最小的开始，生成到第n个即为答案。实际上对于<code class="language-plaintext highlighter-rouge">1e9</code>数量级，必须思考<code class="language-plaintext highlighter-rouge">O(logn)</code>的解法。</p>
 
-<p>定义：<code>f(k)</code>表示<code>[1, k]</code>能够被a/b/c整除的数的数目。注意对于能被a整除的数有<code>k//a</code>个，则根据<strong>容斥原理</strong>。可以得到：</p>
-<pre><code class="language-python">def f(k):
-    """f(k) return the number of numbers that can be divide by a/b/c"""
-    return k // a + k // b + k // c - k // LCM(a, b) - k // LCM(b, c) - k // LCM(a, c) + k // LCM(a, b, c=c)
-</code></pre>
-<p>其中<code>LCM</code>是最小公倍数计算。显然<code>f(k)</code>是一个随k递增的区间，只要找到起始的区间端点，我们就能在这个问题上应用二分查找。显然区间的左端点是<code>min(a, b, c)</code>,即n取值为1时，答案为a,b,c中的最小值，右端点最大为<code>n*max(a, b, c)</code>这样我们就可以进行二分查找了，如下二分解法。</p>
-<pre><code class="language-python">class Solution_1201:
-    # 暴力解法
-    def _TLE_nthUglyNumber(self, n: int, a: int, b: int, c: int) -&gt; int:
-        # 这个方法要生成所有的临时结果，如果n的值很大(1e9)则会超时
-        tojump = {} # 用于筛选掉重复的情况，a的b倍和b的a倍是重复的。
-        for i in [a, b, c, a * b, a * c, b * c]:
-            tojump[i] = 1
+<p>定义：<code class="language-plaintext highlighter-rouge">f(k)</code>表示<code class="language-plaintext highlighter-rouge">[1, k]</code>能够被a/b/c整除的数的数目。注意对于能被a整除的数有<code class="language-plaintext highlighter-rouge">k//a</code>个，则根据<strong>容斥原理</strong>。可以得到：</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+    <span class="s">"""f(k) return the number of numbers that can be divide by a/b/c"""</span>
+    <span class="k">return</span> <span class="n">k</span> <span class="o">//</span> <span class="n">a</span> <span class="o">+</span> <span class="n">k</span> <span class="o">//</span> <span class="n">b</span> <span class="o">+</span> <span class="n">k</span> <span class="o">//</span> <span class="n">c</span> <span class="o">-</span> <span class="n">k</span> <span class="o">//</span> <span class="n">LCM</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="n">k</span> <span class="o">//</span> <span class="n">LCM</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">-</span> <span class="n">k</span> <span class="o">//</span> <span class="n">LCM</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="n">k</span> <span class="o">//</span> <span class="n">LCM</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
+</code></pre></div></div>
+<p>其中<code class="language-plaintext highlighter-rouge">LCM</code>是最小公倍数计算。显然<code class="language-plaintext highlighter-rouge">f(k)</code>是一个随k递增的区间，只要找到起始的区间端点，我们就能在这个问题上应用二分查找。显然区间的左端点是<code class="language-plaintext highlighter-rouge">min(a, b, c)</code>,即n取值为1时，答案为a,b,c中的最小值，右端点最大为<code class="language-plaintext highlighter-rouge">n*max(a, b, c)</code>这样我们就可以进行二分查找了，如下二分解法。</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_1201</span><span class="p">:</span>
+    <span class="c1"># 暴力解法
+</span>    <span class="k">def</span> <span class="nf">_TLE_nthUglyNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="c1"># 这个方法要生成所有的临时结果，如果n的值很大(1e9)则会超时
+</span>        <span class="n">tojump</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># 用于筛选掉重复的情况，a的b倍和b的a倍是重复的。
+</span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">*</span> <span class="n">c</span><span class="p">,</span> <span class="n">b</span> <span class="o">*</span> <span class="n">c</span><span class="p">]:</span>
+            <span class="n">tojump</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 
-        res = 0
-        ia = ib = ic = 1
-        i = 0
-        while i &lt; n:
-            t = min(a * ia, b * ib, c * ic)
-            if t in tojump and tojump[t] == 1:
-                tojump[t] = 0
-                res = t
-                i += 1
-            elif t not in tojump:
-                res = t
-                i += 1
-            ia += (t == a * ia)
-            ib += (t == b * ib)
-            ic += (t == c * ic)
-        return res
-    # 二分解法
-    def nthUglyNumber(self, n: int, a: int, b: int, c: int) -&gt; int:
-        def gcd(a, b):
-            """计算最大公约数"""
-            while b &gt; 0:
-                a, b = b, a % b
-            return a
+        <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">ia</span> <span class="o">=</span> <span class="n">ib</span> <span class="o">=</span> <span class="n">ic</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">ia</span><span class="p">,</span> <span class="n">b</span> <span class="o">*</span> <span class="n">ib</span><span class="p">,</span> <span class="n">c</span> <span class="o">*</span> <span class="n">ic</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tojump</span> <span class="ow">and</span> <span class="n">tojump</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">tojump</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">t</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tojump</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">t</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">ia</span> <span class="o">+=</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="n">a</span> <span class="o">*</span> <span class="n">ia</span><span class="p">)</span>
+            <span class="n">ib</span> <span class="o">+=</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="n">b</span> <span class="o">*</span> <span class="n">ib</span><span class="p">)</span>
+            <span class="n">ic</span> <span class="o">+=</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="n">c</span> <span class="o">*</span> <span class="n">ic</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span>
+    <span class="c1"># 二分解法
+</span>    <span class="k">def</span> <span class="nf">nthUglyNumber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">gcd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+            <span class="s">"""计算最大公约数"""</span>
+            <span class="k">while</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">%</span> <span class="n">b</span>
+            <span class="k">return</span> <span class="n">a</span>
 
-        def LCM(a, b, c=1):
-            """计算最小公倍数"""
-            if c == 1:
-                return (a * b) // gcd(a, b)
-            lcm_ab = (a * b) // gcd(a, b)
-            lcm_bc = (b * c) // gcd(b, c)
-            return (lcm_ab * lcm_bc) // gcd(lcm_ab, lcm_bc)
+        <span class="k">def</span> <span class="nf">LCM</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+            <span class="s">"""计算最小公倍数"""</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="o">//</span> <span class="n">gcd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+            <span class="n">lcm_ab</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="o">//</span> <span class="n">gcd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+            <span class="n">lcm_bc</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span> <span class="o">//</span> <span class="n">gcd</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">lcm_ab</span> <span class="o">*</span> <span class="n">lcm_bc</span><span class="p">)</span> <span class="o">//</span> <span class="n">gcd</span><span class="p">(</span><span class="n">lcm_ab</span><span class="p">,</span> <span class="n">lcm_bc</span><span class="p">)</span>
 
-        def f(k):
-            """f(k) return the number of numbers that can be divide by a/b/c"""
-            return k // a + k // b + k // c - k // LCM(a, b) - k // LCM(b, c) - k // LCM(a, c) + k // LCM(a, b, c=c)
+        <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+            <span class="s">"""f(k) return the number of numbers that can be divide by a/b/c"""</span>
+            <span class="k">return</span> <span class="n">k</span> <span class="o">//</span> <span class="n">a</span> <span class="o">+</span> <span class="n">k</span> <span class="o">//</span> <span class="n">b</span> <span class="o">+</span> <span class="n">k</span> <span class="o">//</span> <span class="n">c</span> <span class="o">-</span> <span class="n">k</span> <span class="o">//</span> <span class="n">LCM</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="n">k</span> <span class="o">//</span> <span class="n">LCM</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">-</span> <span class="n">k</span> <span class="o">//</span> <span class="n">LCM</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="n">k</span> <span class="o">//</span> <span class="n">LCM</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
 
-        left = min(a, b, c)
-        right = min(n * max(a, b, c), int(2e9 + 1))
-        while left &lt; right:
-            mid = (right + left) // 2
-            if f(mid) &lt; n:
-                left = mid + 1
-            else:
-                right = mid
-        return left  # 返回的恰好时第一个能够被a/b/c整除的,且f(k)=n的数
-</code></pre>
+        <span class="n">left</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="mf">2e9</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">while</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">right</span> <span class="o">+</span> <span class="n">left</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="k">if</span> <span class="n">f</span><span class="p">(</span><span class="n">mid</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+                <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span>
+        <span class="k">return</span> <span class="n">left</span>  <span class="c1"># 返回的恰好时第一个能够被a/b/c整除的,且f(k)=n的数
+</span></code></pre></div></div>
 
 <p>再如LeetCode 410.将一个数组分成m个非空子数组，找到使得子数组和的最大值最小得划分，求这个最小值。显然，对于一个长度为n得数组，有C(n-1, m-1)种划分方式，枚举无法解决这个问题。</p>
 
-<p>可以看到，子数组和得最大值得取值范围为<code>[max(A), sum(A)]</code>，即能够将数组A最大的元素单独划到一个子数组，其他子数组和都比最大元素值小时，<code>max(A)</code>是要求的结果，能够将数组A不进行划分(m=1)时，<code>sum(A)</code>是结果。这是一个升序的区间，可以在这个区间内查找。但我们还少了能检查一个值是否满足条件的方法，要检查的值是一个给定的子数组和的界<code>max_sum</code>。即检查</p>
+<p>可以看到，子数组和得最大值得取值范围为<code class="language-plaintext highlighter-rouge">[max(A), sum(A)]</code>，即能够将数组A最大的元素单独划到一个子数组，其他子数组和都比最大元素值小时，<code class="language-plaintext highlighter-rouge">max(A)</code>是要求的结果，能够将数组A不进行划分(m=1)时，<code class="language-plaintext highlighter-rouge">sum(A)</code>是结果。这是一个升序的区间，可以在这个区间内查找。但我们还少了能检查一个值是否满足条件的方法，要检查的值是一个给定的子数组和的界<code class="language-plaintext highlighter-rouge">max_sum</code>。即检查</p>
 
 <ul>
-  <li>给定一个<code>max_sum</code>,能否分成m个<code>sum(·)&lt;=max_sum</code>的子集？</li>
+  <li>给定一个<code class="language-plaintext highlighter-rouge">max_sum</code>,能否分成m个<code class="language-plaintext highlighter-rouge">sum(·)&lt;=max_sum</code>的子集？</li>
 </ul>
 
 <p>直接check好像不太行的通，所以我们要反过来思考。</p>
 
 <ul>
-  <li>数组A不大于<code>max_sum</code>子数组的数目，是否超过m个？</li>
+  <li>数组A不大于<code class="language-plaintext highlighter-rouge">max_sum</code>子数组的数目，是否超过m个？</li>
 </ul>
 
 <p>显然第二个目标个验证起来更简单，因此解法如下：</p>
-<pre><code class="language-python">class Solution_410:
-    def _splitArray(self, nums: List[int], m: int) -&gt; int:
-        # 结果的取值区间为： [max(nums), sum(nums)]
-        # 可以在这个区间内进行二分查找
-        # 给定一个检查的值max_sum, 确定数组能否分成m个 sum&lt;= max_sum的子集
-        # 可以反过来检查不大于max_sum的子数组数目，如果超过m个则不能划分
-        def can_split(max_sum):
-            cur, cuts = 0, 0
-            for x in nums:
-                if cur + x &gt; max_sum:
-                    cuts += 1
-                    cur = x
-                else:
-                    cur += x
-            return cuts &lt; m  # (cuts + 1) &lt; m 最后cur中还剩一个子集。
-
-        lo = max(nums)
-        hi = sum(nums)
-        while lo &lt; hi:
-            mid = lo + (hi - lo) // 2
-            if can_split(mid):
-                hi = mid
-            else:
-                lo = mid + 1
-        return lo
-</code></pre>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_410</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_splitArray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nums</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">m</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="c1"># 结果的取值区间为： [max(nums), sum(nums)]
+</span>        <span class="c1"># 可以在这个区间内进行二分查找
+</span>        <span class="c1"># 给定一个检查的值max_sum, 确定数组能否分成m个 sum&lt;= max_sum的子集
+</span>        <span class="c1"># 可以反过来检查不大于max_sum的子数组数目，如果超过m个则不能划分
+</span>        <span class="k">def</span> <span class="nf">can_split</span><span class="p">(</span><span class="n">max_sum</span><span class="p">):</span>
+            <span class="n">cur</span><span class="p">,</span> <span class="n">cuts</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">cur</span> <span class="o">+</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">max_sum</span><span class="p">:</span>
+                    <span class="n">cuts</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">cur</span> <span class="o">=</span> <span class="n">x</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">cur</span> <span class="o">+=</span> <span class="n">x</span>
+            <span class="k">return</span> <span class="n">cuts</span> <span class="o">&lt;</span> <span class="n">m</span>  <span class="c1"># (cuts + 1) &lt; m 最后cur中还剩一个子集。
+</span>
+        <span class="n">lo</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+        <span class="n">hi</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">lo</span> <span class="o">&lt;</span> <span class="n">hi</span><span class="p">:</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="n">lo</span> <span class="o">+</span> <span class="p">(</span><span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="k">if</span> <span class="n">can_split</span><span class="p">(</span><span class="n">mid</span><span class="p">):</span>
+                <span class="n">hi</span> <span class="o">=</span> <span class="n">mid</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lo</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">lo</span>
+</code></pre></div></div>
 <p>与此类似的还有LeetCode 875.题，思路很相似，就不赘述了。</p>
-<pre><code class="language-python">class Solution_875:
-    def minEatingSpeed(self, piles: List[int], H: int) -&gt; int:
-        def can(K):
-            hours = 0
-            for p in piles:
-                hours += math.ceil(p / K)
-            return hours &lt;= H  # (hours + 1 &lt;= H)
-
-        # 解的取值区间[1, max(pile)] 最少吃一个，最多一次吃一堆
-        lo = 1
-        hi = max(piles)
-        while lo &lt; hi:
-            mid = (lo + hi) &gt;&gt; 1
-            if can(mid):
-                hi = mid
-            else:
-                lo = mid + 1
-        return lo
-</code></pre>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_875</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">minEatingSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">piles</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">H</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">can</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+            <span class="n">hours</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">piles</span><span class="p">:</span>
+                <span class="n">hours</span> <span class="o">+=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="n">K</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">hours</span> <span class="o">&lt;=</span> <span class="n">H</span>  <span class="c1"># (hours + 1 &lt;= H)
+</span>
+        <span class="c1"># 解的取值区间[1, max(pile)] 最少吃一个，最多一次吃一堆
+</span>        <span class="n">lo</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">hi</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">piles</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">lo</span> <span class="o">&lt;</span> <span class="n">hi</span><span class="p">:</span>
+            <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">lo</span> <span class="o">+</span> <span class="n">hi</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">can</span><span class="p">(</span><span class="n">mid</span><span class="p">):</span>
+                <span class="n">hi</span> <span class="o">=</span> <span class="n">mid</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lo</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">lo</span>
+</code></pre></div></div>
 <p>时间复杂度要求比较高的题目中，可以考虑使用二分查找，前提是：</p>
 <ul>
   <li>解在一个有序的数组中/在一个单调的区间内</li>
   <li>可以构造出对关键字（可能解）的快速比较（判断）方法</li>
 </ul>
 
-<p>同时二分可以结合其他算法思想，求解问题，经典丢鸡蛋问题LeetCode 887.给定楼层<code>N</code>和鸡蛋数目<code>k</code>,求最少多少步能够找出确定在某一层<code>F</code>丢鸡蛋会碎，在<code>f &lt; F</code>丢鸡蛋不会碎。
+<p>同时二分可以结合其他算法思想，求解问题，经典丢鸡蛋问题LeetCode 887.给定楼层<code class="language-plaintext highlighter-rouge">N</code>和鸡蛋数目<code class="language-plaintext highlighter-rouge">k</code>,求最少多少步能够找出确定在某一层<code class="language-plaintext highlighter-rouge">F</code>丢鸡蛋会碎，在<code class="language-plaintext highlighter-rouge">f &lt; F</code>丢鸡蛋不会碎。
 首先可以使用带记忆的搜索(DP)+二分查找的方式。
-定义:状态<code>(k, N)</code>，<code>DP(k,N)</code>在该状态解这个问题需要的最多的步数。
-状态转移：我们在<code>X</code>层丢鸡蛋，</p>
+定义:状态<code class="language-plaintext highlighter-rouge">(k, N)</code>，<code class="language-plaintext highlighter-rouge">DP(k,N)</code>在该状态解这个问题需要的最多的步数。
+状态转移：我们在<code class="language-plaintext highlighter-rouge">X</code>层丢鸡蛋，</p>
 <ul>
   <li>碎了状态变成(K-1, X-1)</li>
   <li>没碎状态变成(K, N-X)</li>
@@ -321,116 +321,116 @@ dp(k, n) = \min_{1<=X<=N} (max(dp(k-1, x-1), dp(k, n-x))) %]]></script>
 
 <p>注意到：</p>
 <ul>
-  <li><code>t1 = dp(k-1, x-1)</code>随<code>x</code>单调增</li>
-  <li><code>t2 = dp(k, n-x)</code>随<code>x</code>单调减</li>
+  <li><code class="language-plaintext highlighter-rouge">t1 = dp(k-1, x-1)</code>随<code class="language-plaintext highlighter-rouge">x</code>单调增</li>
+  <li><code class="language-plaintext highlighter-rouge">t2 = dp(k, n-x)</code>随<code class="language-plaintext highlighter-rouge">x</code>单调减</li>
 </ul>
 
-<p>即<code>max(t1,t2)</code><strong>是二者图像的上半部分</strong>，因此查找<code>x</code>可以二分进行，同时注意边界条件是<code>t1</code>,<code>t2</code>两者不一定相交于整数X, 因此这时要检查两个。</p>
-<pre><code class="language-python">class Solution_887:
-    def superEggDrop(self, K: int, N: int) -&gt; int:
-        # DP(memo+search) + binary search
-        # 状态(K, N)
-        # 如果我们从X层丢鸡蛋，碎了状态变成(K-1, X-1), 没碎状态变成(K, N-X)
-        # 定义dp(k, n) = 在状态(k, n)下解这个问题需要的最多的步数，则
-        #   dp(k, n) = min_{1&lt;=X&lt;=N} (max(dp(k-1, x-1), dp(k, n-x)))
-        # 注意到 t1 = dp(k-1, x-1), 随x单调增
-        #        t2 = dp(k, n-x), 随x单调减
-        # 于是max(t1,t2)是二者的上半部分, 因此查找x可以二分进行。
-        # 边界条件是两者不一定相交于整数X, 因此这时要检查两个。
-        # Time: O(KN log N)
-        # space: O(KN)
-        # https://leetcode.com/articles/super-egg-drop/ Solution1
-        dp = {}
+<p>即<code class="language-plaintext highlighter-rouge">max(t1,t2)</code><strong>是二者图像的上半部分</strong>，因此查找<code class="language-plaintext highlighter-rouge">x</code>可以二分进行，同时注意边界条件是<code class="language-plaintext highlighter-rouge">t1</code>,<code class="language-plaintext highlighter-rouge">t2</code>两者不一定相交于整数X, 因此这时要检查两个。</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_887</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">superEggDrop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">K</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="c1"># DP(memo+search) + binary search
+</span>        <span class="c1"># 状态(K, N)
+</span>        <span class="c1"># 如果我们从X层丢鸡蛋，碎了状态变成(K-1, X-1), 没碎状态变成(K, N-X)
+</span>        <span class="c1"># 定义dp(k, n) = 在状态(k, n)下解这个问题需要的最多的步数，则
+</span>        <span class="c1">#   dp(k, n) = min_{1&lt;=X&lt;=N} (max(dp(k-1, x-1), dp(k, n-x)))
+</span>        <span class="c1"># 注意到 t1 = dp(k-1, x-1), 随x单调增
+</span>        <span class="c1">#        t2 = dp(k, n-x), 随x单调减
+</span>        <span class="c1"># 于是max(t1,t2)是二者的上半部分, 因此查找x可以二分进行。
+</span>        <span class="c1"># 边界条件是两者不一定相交于整数X, 因此这时要检查两个。
+</span>        <span class="c1"># Time: O(KN log N)
+</span>        <span class="c1"># space: O(KN)
+</span>        <span class="c1"># https://leetcode.com/articles/super-egg-drop/ Solution1
+</span>        <span class="n">dp</span> <span class="o">=</span> <span class="p">{}</span>
 
-        def foo(k, n):
-            if (k, n) in dp:
-                return dp[(k, n)]
+        <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="ow">in</span> <span class="n">dp</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">dp</span><span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">)]</span>
 
-            if n == 0:
-                ans = 0
-            elif k == 1:
-                ans = n
-            else:
-                lo, hi = 1, n
-                while lo + 1 &lt; hi:
-                    x = (lo + hi) &gt;&gt; 1
-                    t1 = foo(k - 1, x - 1)
-                    t2 = foo(k, n - x)
+            <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="n">n</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span>
+                <span class="k">while</span> <span class="n">lo</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">hi</span><span class="p">:</span>
+                    <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">lo</span> <span class="o">+</span> <span class="n">hi</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+                    <span class="n">t1</span> <span class="o">=</span> <span class="n">foo</span><span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">t2</span> <span class="o">=</span> <span class="n">foo</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>
 
-                    if t1 &lt; t2:
-                        lo = x
-                    elif t1 &gt; t2:
-                        hi = x
-                    else:
-                        lo = hi = x
-                ans = 1 + min(max(foo(k - 1, x - 1), foo(k, n - x)) for x in (lo, hi))
-            dp[(k, n)] = ans
-            return dp[(k, n)]
+                    <span class="k">if</span> <span class="n">t1</span> <span class="o">&lt;</span> <span class="n">t2</span><span class="p">:</span>
+                        <span class="n">lo</span> <span class="o">=</span> <span class="n">x</span>
+                    <span class="k">elif</span> <span class="n">t1</span> <span class="o">&gt;</span> <span class="n">t2</span><span class="p">:</span>
+                        <span class="n">hi</span> <span class="o">=</span> <span class="n">x</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">lo</span> <span class="o">=</span> <span class="n">hi</span> <span class="o">=</span> <span class="n">x</span>
+                <span class="n">ans</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">min</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">foo</span><span class="p">(</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">foo</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">))</span>
+            <span class="n">dp</span><span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">)]</span> <span class="o">=</span> <span class="n">ans</span>
+            <span class="k">return</span> <span class="n">dp</span><span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">)]</span>
 
-        return foo(K, N)
-</code></pre>
+        <span class="k">return</span> <span class="n">foo</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+</code></pre></div></div>
 
-<p>反向思考这个问题，假如给出步数<code>T</code>，<code>K</code>个鸡蛋, <code>f(T,K)</code>表示我们能够解原问题的楼层数的最大值。（能够解原问题指：找到<code>0&lt;=F&lt;=f(T,K)</code>即确定找到楼层<code>F</code>)。则问题转换为寻找满足<code>f(T,K) &gt;= N</code>的<code>T</code>的最小值。</p>
+<p>反向思考这个问题，假如给出步数<code class="language-plaintext highlighter-rouge">T</code>，<code class="language-plaintext highlighter-rouge">K</code>个鸡蛋, <code class="language-plaintext highlighter-rouge">f(T,K)</code>表示我们能够解原问题的楼层数的最大值。（能够解原问题指：找到<code class="language-plaintext highlighter-rouge">0&lt;=F&lt;=f(T,K)</code>即确定找到楼层<code class="language-plaintext highlighter-rouge">F</code>)。则问题转换为寻找满足<code class="language-plaintext highlighter-rouge">f(T,K) &gt;= N</code>的<code class="language-plaintext highlighter-rouge">T</code>的最小值。</p>
 
-<p>在最优策略下，我们在解<code>X'</code>层丢一个鸡蛋，如果破了，我们可以解<code>f(T-1, K-1)</code>, 如果没有碎，可以解<code>f(T-1, K)</code>。（这里的解<code>f</code>等价于上面解问题）。
+<p>在最优策略下，我们在解<code class="language-plaintext highlighter-rouge">X'</code>层丢一个鸡蛋，如果破了，我们可以解<code class="language-plaintext highlighter-rouge">f(T-1, K-1)</code>, 如果没有碎，可以解<code class="language-plaintext highlighter-rouge">f(T-1, K)</code>。（这里的解<code class="language-plaintext highlighter-rouge">f</code>等价于上面解问题）。
 于是：</p>
-<pre><code class="language-html">f(T, K) = 1 + f(T-1, K-1) + f(T-1, K)
-</code></pre>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>f(T, K) = 1 + f(T-1, K-1) + f(T-1, K)
+</code></pre></div></div>
 
-<p>且显然<code>f(t, 1) = t (t&gt;=1)</code>, <code>f(1, k) = 1(k&gt;=1)</code>
-接下来用两种方式解的<code>f(t, k)</code>的通项</p>
+<p>且显然<code class="language-plaintext highlighter-rouge">f(t, 1) = t (t&gt;=1)</code>, <code class="language-plaintext highlighter-rouge">f(1, k) = 1(k&gt;=1)</code>
+接下来用两种方式解的<code class="language-plaintext highlighter-rouge">f(t, k)</code>的通项</p>
 
 <ol>
   <li>
-    <p>记:<code>g(t, k) = f(t, k) - F(t, k-1)</code>，又有：
- <code>f(t, k)    = 1 + f(t-1, k-1) + f(t-1, k)</code>
- <code>f(t, k-1)  = 1 + f(t-1, k-2) + f(t-1, k-1)</code></p>
+    <p>记:<code class="language-plaintext highlighter-rouge">g(t, k) = f(t, k) - F(t, k-1)</code>，又有：
+ <code class="language-plaintext highlighter-rouge">f(t, k)    = 1 + f(t-1, k-1) + f(t-1, k)</code>
+ <code class="language-plaintext highlighter-rouge">f(t, k-1)  = 1 + f(t-1, k-2) + f(t-1, k-1)</code></p>
 
     <p>则:</p>
-    <pre><code class="language-html"> g(t, k) = f(t, k) - f(t, k-1) 
+    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code> g(t, k) = f(t, k) - f(t, k-1) 
          = f(t-1, k) - f(t-1, k-2) 
          = g(t-1, k) + g(t-1, k-1)
-</code></pre>
-    <p>上式子 <code>g(t, k) = g(t-1, k) + g(t-1, k-1)</code>是一个二项分布的递归式，其解为<code>g(t, k) = C(t, k+1)</code>
- 则：<code>f(t, k) = sum_{1&lt;=x&lt;=K} g(t, x) = sum C(t, x)</code></p>
+</code></pre></div>    </div>
+    <p>上式子 <code class="language-plaintext highlighter-rouge">g(t, k) = g(t-1, k) + g(t-1, k-1)</code>是一个二项分布的递归式，其解为<code class="language-plaintext highlighter-rouge">g(t, k) = C(t, k+1)</code>
+ 则：<code class="language-plaintext highlighter-rouge">f(t, k) = sum_{1&lt;=x&lt;=K} g(t, x) = sum C(t, x)</code></p>
   </li>
   <li>
-    <p>另一个角度来看，我们有<code>t</code>次尝试和<code>k</code>个鸡蛋，因此这是一个长度为<code>t</code>,失败（鸡蛋碎）次数最多为<code>k</code>的尝试序列。
-    没有失败的是<code>C(n, 0)</code>, 一次失败是<code>C(n, 1)</code>…, 综合起来就是<code>sum C(t, x)</code></p>
+    <p>另一个角度来看，我们有<code class="language-plaintext highlighter-rouge">t</code>次尝试和<code class="language-plaintext highlighter-rouge">k</code>个鸡蛋，因此这是一个长度为<code class="language-plaintext highlighter-rouge">t</code>,失败（鸡蛋碎）次数最多为<code class="language-plaintext highlighter-rouge">k</code>的尝试序列。
+    没有失败的是<code class="language-plaintext highlighter-rouge">C(n, 0)</code>, 一次失败是<code class="language-plaintext highlighter-rouge">C(n, 1)</code>…, 综合起来就是<code class="language-plaintext highlighter-rouge">sum C(t, x)</code></p>
   </li>
 </ol>
 
-<p>使用<code>C(n, k+1) = C(n, k) * (n-k)/(k+1)</code>可以简化计算。</p>
-<pre><code class="language-python">class Solution_887:
-    def superEggDrop(self, K, N):
-        def combination(x):
-            # C(n, k + 1) = C(n, k) * (n-k)/(k+1)
-            ans = 0
-            r = 1
-            for i in range(1, K+1):
-                r *= x - i + 1   # r = r * (x - (i-1)) // ((i-1) + 1)
-                r //= i
-                ans += r
-                if ans &gt;= N:
-                    break
-            return ans
+<p>使用<code class="language-plaintext highlighter-rouge">C(n, k+1) = C(n, k) * (n-k)/(k+1)</code>可以简化计算。</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Solution_887</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">superEggDrop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">combination</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="c1"># C(n, k + 1) = C(n, k) * (n-k)/(k+1)
+</span>            <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">K</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">r</span> <span class="o">*=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>   <span class="c1"># r = r * (x - (i-1)) // ((i-1) + 1)
+</span>                <span class="n">r</span> <span class="o">//=</span> <span class="n">i</span>
+                <span class="n">ans</span> <span class="o">+=</span> <span class="n">r</span>
+                <span class="k">if</span> <span class="n">ans</span> <span class="o">&gt;=</span> <span class="n">N</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="k">return</span> <span class="n">ans</span>
 
-        lo, hi = 1, N
-        while lo &lt; hi:
-            mi = (lo + hi) &gt;&gt; 1
-            if combination(mi) &lt; N:
-                lo = mi + 1
-            else:
-                hi = mi
-        return lo
-</code></pre>
+        <span class="n">lo</span><span class="p">,</span> <span class="n">hi</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N</span>
+        <span class="k">while</span> <span class="n">lo</span> <span class="o">&lt;</span> <span class="n">hi</span><span class="p">:</span>
+            <span class="n">mi</span> <span class="o">=</span> <span class="p">(</span><span class="n">lo</span> <span class="o">+</span> <span class="n">hi</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">combination</span><span class="p">(</span><span class="n">mi</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">:</span>
+                <span class="n">lo</span> <span class="o">=</span> <span class="n">mi</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">hi</span> <span class="o">=</span> <span class="n">mi</span>
+        <span class="k">return</span> <span class="n">lo</span>
+</code></pre></div></div>
 
 <h4 id="插值查找">插值查找</h4>
 <p>插值查找是二分查找的改进办法，每次计算中间节点时，改用</p>
-<pre><code class="language-python">mid = lo + (key - A[lo]) // (A[hi] - A[lo]) * (hi - lo)
-</code></pre>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mid</span> <span class="o">=</span> <span class="n">lo</span> <span class="o">+</span> <span class="p">(</span><span class="n">key</span> <span class="o">-</span> <span class="n">A</span><span class="p">[</span><span class="n">lo</span><span class="p">])</span> <span class="o">//</span> <span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">hi</span><span class="p">]</span> <span class="o">-</span> <span class="n">A</span><span class="p">[</span><span class="n">lo</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span><span class="p">)</span>
+</code></pre></div></div>
 
-<p>简单但来说就是将二分查找中的<code>1/2</code>换成了与key和A有关的数值，每次取得mid更加接近关键字key。这个算法适合与A中关键字分布均匀的情况。我在实际中从来没用过。</p>
+<p>简单但来说就是将二分查找中的<code class="language-plaintext highlighter-rouge">1/2</code>换成了与key和A有关的数值，每次取得mid更加接近关键字key。这个算法适合与A中关键字分布均匀的情况。我在实际中从来没用过。</p>
 
 <h4 id="树表查找">树表查找</h4>
 <p>树表查找即使用树数结构对应的查找方法，典型的有二叉查找树（实际上二分查找的过程就对应一棵二叉查找树），此外还有为了保证最差性能的平衡二叉查找树，红黑树，以及可以有多个分支的B树和B+树等，查找树也是有序结构，查找时并不需要遍历整个树，这一部分之后单独来写一些。</p>
