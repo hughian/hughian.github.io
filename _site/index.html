@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en"><!-- Load MathJax -->
+<script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<link rel="stylesheet" href="/blog/assets/css/main.css">
+<link rel="stylesheet" href="/blog/assets/css/prism.css">
+<!-- TODO: Find a better way to use KaTex -->
+<!-- Load jQuery -->
+<!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
+
+<!-- Load KaTeX -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css"> </link>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.js"></script> -->
+<body><header class="site-header">
+
+    <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Hughian&#39;s Log</a><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewBox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+              </svg>
+            </span>
+          </label>
+  
+          <div class="trigger"><a class="page-link" href="/blog/about/">About</a></div>
+        </nav></div>
+  </header><main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="home">
+<h2 class="post-list-heading">Posts</h2>
+    <ul class="post-list"><li><span class="post-meta">Nov 17, 2019</span>
+        <h3>
+          <a class="post-link" href="/blog/jekyll/update/2019/11/17/welcome-to-jekyll.html">
+            Welcome to Jekyll!
+          </a>
+        </h3></li><li><span class="post-meta">Nov 17, 2019</span>
+        <h3>
+          <a class="post-link" href="/blog/2019/11/17/TestLatex.html">
+            Testlatex
+          </a>
+        </h3></li><li><span class="post-meta">Nov 10, 2019</span>
+        <h3>
+          <a class="post-link" href="/blog/2019/11/10/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93-%E4%B8%B2%E5%8C%B9%E9%85%8D.html">
+            算法总结-字符串匹配
+          </a>
+        </h3></li><li><span class="post-meta">Nov 6, 2019</span>
+        <h3>
+          <a class="post-link" href="/blog/2019/11/06/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93-%E4%BA%8C%E5%8F%89%E6%A0%91.html">
+            算法总结-二叉树
+          </a>
+        </h3></li><li><span class="post-meta">Nov 4, 2019</span>
+        <h3>
+          <a class="post-link" href="/blog/2019/11/04/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93-%E6%95%B0%E7%BB%84-%E9%93%BE%E8%A1%A8.html">
+            算法总结-数组&amp;链表
+          </a>
+        </h3></li><li><span class="post-meta">Nov 3, 2019</span>
+        <h3>
+          <a class="post-link" href="/blog/2019/11/03/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93-%E6%9F%A5%E6%89%BE.html">
+            算法总结-查找
+          </a>
+        </h3></li><li><span class="post-meta">Nov 2, 2019</span>
+        <h3>
+          <a class="post-link" href="/blog/2019/11/02/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93-%E4%BD%8D%E6%93%8D%E4%BD%9C.html">
+            算法总结-位操作
+          </a>
+        </h3></li><li><span class="post-meta">Nov 1, 2019</span>
+        <h3>
+          <a class="post-link" href="/blog/cs/2019/11/01/%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93-%E6%8E%92%E5%BA%8F.html">
+            算法总结-排序
+          </a>
+        </h3></li></ul>
+
+    <p class="rss-subscribe">subscribe <a href="/blog/feed.xml">via RSS</a></p></div>
+
+      </div>
+    </main>
+<script src="/blog/assets/prism.js"></script>
+<!-- <script>
+    $("script[type='math/tex']").replaceWith(
+        function () {
+            var tex = $(this).text();
+            return "<span class=\"inline-equation\">" +
+                katex.renderToString(tex) +
+                "</span>";
+        });
+
+
+    $("script[type='math/tex; mode=display']").replaceWith(
+        function () {
+            var tex = $(this).text();
+            return "<div class=\"equation\">" +
+                katex.renderToString("\\displaystyle " + tex) +
+                "</div>";
+        });
+</script> -->
+<footer class="site-footer h-card">
+    <data class="u-url" href="/blog/"></data>
+  
+    <div class="wrapper">
+  
+      <h2 class="footer-heading">Hughian&#39;s Log</h2>
+  
+      <div class="footer-col-wrapper">
+        <div class="footer-col footer-col-1">
+          <ul class="contact-list">
+            <li class="p-name">Hughian&#39;s Log</li><li><a class="u-email" href="mailto:hughian@zju.edu.cn">hughian@zju.edu.cn</a></li></ul>
+        </div>
+  
+        <div class="footer-col footer-col-2"><ul class="social-media-list"></ul></div>
+  
+        <div class="footer-col footer-col-3">
+          <p>This is a personal blog that used for recording some notes and thoughts. Stay hungry, stay foolish~</p>
+        </div>
+      </div>
+  
+    </div>
+  
+  </footer>
+  </body>
+
+</html>
